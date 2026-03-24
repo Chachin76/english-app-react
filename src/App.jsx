@@ -19,27 +19,19 @@ function App() {
     localStorage.getItem('nivel_ingles') || ''
   );
 
-  function pedirKey() {
-    const key = prompt('Ingresá tu API Key de Anthropic (empieza con sk-ant-):');
-    if (key && key.startsWith('sk-ant')) {
-      localStorage.setItem('anthropic_key', key);
-      alert('✅ API Key guardada correctamente.');
-    }
-  }
-
+  
   return (
     <div className="app">
       <header>
         <h1>🇺🇸 English Learning App</h1>
         <p>Tu tutor de inglés personal con IA</p>
-        <div style={{ display:'flex', justifyContent:'center', alignItems:'center', gap:'8px', marginTop:'8px' }}>
-          <button className="btn-key" onClick={pedirKey}>🔑 API Key</button>
-          {nivelUsuario && (
-            <span style={{ background:'#e8f0fe', color:'#1a237e', padding:'4px 12px', borderRadius:'12px', fontSize:'0.82rem', fontWeight:'500' }}>
-              Nivel {nivelUsuario}
-            </span>
-          )}
-        </div>
+       <div style={{ display:'flex', justifyContent:'center', alignItems:'center', gap:'8px', marginTop:'8px' }}>
+  {nivelUsuario && (
+    <span style={{ background:'#e8f0fe', color:'#1a237e', padding:'4px 12px', borderRadius:'12px', fontSize:'0.82rem', fontWeight:'500' }}>
+      Nivel {nivelUsuario}
+    </span>
+  )}
+</div> 
       </header>
 
       <nav style={{ display:'flex', flexWrap:'wrap', justifyContent:'center', gap:'8px', marginBottom:'24px' }}>
