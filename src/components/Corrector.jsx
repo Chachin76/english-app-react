@@ -16,7 +16,7 @@ function Corrector() {
     setResultado(null);
 
     try {
-      const resp = await fetch('http://127.0.0.1:8000/corregir', {
+      const resp = await fetch('https://english-app-backend-ifyj.onrender.com/corregir', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ texto })

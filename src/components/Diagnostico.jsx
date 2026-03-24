@@ -123,7 +123,7 @@ function Diagnostico({ onNivelDeterminado }) {
       // Terminó el test — analizar con IA
       setCargando(true);
       try {
-        const resp = await fetch('http://127.0.0.1:8000/diagnostico', {
+        const resp = await fetch('https://english-app-backend-ifyj.onrender.com/diagnostico', {
           method:  'POST',
           headers: { 'Content-Type': 'application/json' },
           body:    JSON.stringify({ respuestas: nuevasRespuestas })

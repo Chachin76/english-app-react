@@ -65,7 +65,7 @@ function Situaciones({ nivelUsuario }) {
     setResumen(null);
     setCargando(true);
     try {
-      const resp = await fetch('http://127.0.0.1:8000/situacion', {
+      const resp = await fetch('https://english-app-backend-ifyj.onrender.com/situacion', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -107,7 +107,7 @@ recognition.interimResults = true;
     setInput('');
     setCargando(true);
     try {
-      const resp = await fetch('http://127.0.0.1:8000/situacion', {
+      const resp = await fetch('https://english-app-backend-ifyj.onrender.com/situacion', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ situacion: situacionElegida.rol, historial: nuevosMensajes, nivel })
@@ -126,7 +126,7 @@ recognition.interimResults = true;
   async function terminarYVerResumen() {
     setCargandoRes(true);
     try {
-      const resp = await fetch('http://127.0.0.1:8000/resumen-situacion', {
+      const resp = await fetch('https://english-app-backend-ifyj.onrender.com/resumen-situacion', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ situacion: situacionElegida.titulo, historial: mensajes, nivel })

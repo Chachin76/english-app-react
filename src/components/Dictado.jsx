@@ -20,7 +20,7 @@ function Dictado({ nivelUsuario }) {
   async function cargarFrases() {
     setCargandoF(true);
     try {
-      const resp = await fetch('http://127.0.0.1:8000/dictado/frases', {
+      const resp = await fetch('https://english-app-backend-ifyj.onrender.com/dictado/frases', {
         method: 'POST', headers: {'Content-Type':'application/json'},
         body: JSON.stringify({ nivel, cantidad: 5 })
       });
@@ -79,7 +79,7 @@ function Dictado({ nivelUsuario }) {
     if (!escrito.trim()) return;
     setCargando(true); setResultado(null);
     try {
-      const resp = await fetch('http://127.0.0.1:8000/dictado/corregir', {
+      const resp = await fetch('https://english-app-backend-ifyj.onrender.com/dictado/corregir', {
         method: 'POST', headers: {'Content-Type':'application/json'},
         body: JSON.stringify({ original: frases[indice].texto, escrito: escrito.trim() })
       });

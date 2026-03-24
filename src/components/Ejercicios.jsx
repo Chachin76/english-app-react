@@ -34,7 +34,7 @@ function Ejercicios({ nivelUsuario }) {
     setSesion(false);
 
     try {
-      const resp = await fetch('http://127.0.0.1:8000/ejercicios', {
+      const resp = await fetch('https://english-app-backend-ifyj.onrender.com/ejercicios', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ tipo, nivel })

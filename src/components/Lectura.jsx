@@ -37,7 +37,7 @@ function Lectura({ nivelUsuario }) {
     setFase('seleccion');
 
     try {
-      const resp = await fetch('http://127.0.0.1:8000/lectura/generar', {
+      const resp = await fetch('https://english-app-backend-ifyj.onrender.com/lectura/generar', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ nivel, tema })

@@ -27,7 +27,7 @@ function Vocabulario({ nivelUsuario }) {
   async function cargarPalabras() {
     setCargando(true);
     try {
-      const resp = await fetch('http://127.0.0.1:8000/vocabulario', {
+      const resp = await fetch('https://english-app-backend-ifyj.onrender.com/vocabulario', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({
