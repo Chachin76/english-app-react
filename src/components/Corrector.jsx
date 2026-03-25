@@ -9,8 +9,8 @@ function Corrector() {
   async function verificar() {
     if (!texto.trim()) return;
 
-    const key = localStorage.getItem('anthropic_key');
-    if (!key) { alert('Ingresá tu API key primero'); return; }
+    
+
 
     setCargando(true);
     setResultado(null);
