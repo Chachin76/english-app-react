@@ -78,14 +78,9 @@ function Login() {
         )}
 
         {modo === 'password' ? (
-          <div style={{ display: 'flex', gap: '8px' }}>
-            <button onClick={handleLogin} disabled={cargando} style={{ flex: 1, padding: '12px', background: '#4f46e5', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', fontSize: '1rem' }}>
-              {cargando ? 'Cargando...' : 'Ingresar'}
-            </button>
-            <button onClick={handleRegistro} disabled={cargando} style={{ flex: 1, padding: '12px', background: '#e8eaf6', color: '#333', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', fontSize: '1rem' }}>
-              Registrarse
-            </button>
-          </div>
+       <button onClick={handleLogin} disabled={cargando} style={{ width: '100%', padding: '12px', background: '#4f46e5', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', fontSize: '1rem' }}>
+  {cargando ? 'Cargando...' : 'Ingresar'}
+</button>   
         ) : (
           <button onClick={handleMagicLink} disabled={cargando} style={{ width: '100%', padding: '12px', background: '#4f46e5', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', fontSize: '1rem' }}>
             {cargando ? 'Enviando...' : '✨ Enviar Magic Link'}
