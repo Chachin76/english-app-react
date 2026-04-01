@@ -93,7 +93,7 @@ const PREGUNTAS = [
   }
 ];
 
-function Diagnostico({ onNivelDeterminado }) {
+function Diagnostico({ onNivelDeterminado, idioma = 'ingles' }) {
   const [preguntaActual, setPreguntaActual] = useState(0);
   const [respuestas, setRespuestas]         = useState([]);
   const [seleccion, setSeleccion]           = useState('');
@@ -126,7 +126,7 @@ function Diagnostico({ onNivelDeterminado }) {
         const resp = await fetch('https://english-app-backend-ifyj.onrender.com/diagnostico', {
           method:  'POST',
           headers: { 'Content-Type': 'application/json' },
-          body:    JSON.stringify({ respuestas: nuevasRespuestas })
+        body:    JSON.stringify({ respuestas: nuevasRespuestas, idioma })  
         });
         const datos = await resp.json();
         setResultado(datos);

@@ -1,28 +1,48 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const frases = [
-  { ingles: "The early bird catches the worm.",    español: "El que madruga, Dios lo ayuda." },
-  { ingles: "Practice makes perfect.",             español: "La práctica hace al maestro." },
-  { ingles: "Every cloud has a silver lining.",    español: "No hay mal que por bien no venga." },
-  { ingles: "Actions speak louder than words.",    español: "Las acciones valen más que las palabras." },
-  { ingles: "Better late than never.",             español: "Más vale tarde que nunca." },
-  { ingles: "Where there's a will, there's a way.", español: "Querer es poder." },
-  { ingles: "Don't judge a book by its cover.",    español: "No juzgues por las apariencias." },
-];
-
-function Frases() {
+function Frases({ idioma = 'ingles' }) {
+  const [frases, setFrases] = useState([]);
   const [indice, setIndice] = useState(0);
+  const [cargando, setCargando] = useState(true);
+
+  useEffect(() => {
+    cargarFrases();
+  }, [idioma]);
+
+  async function cargarFrases() {
+    setCargando(true);
+    try {
+      const resp = await fetch('https://english-app-backend-ifyj.onrender.com/frases', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idioma })
+      });
+      const datos = await resp.json();
+      setFrases(datos.frases);
+      setIndice(0);
+    } catch(e) {
+      console.error(e);
+    } finally {
+      setCargando(false);
+    }
+  }
 
   function siguiente() {
     setIndice((indice + 1) % frases.length);
   }
 
+  if (cargando) return <div className="card"><p>Cargando frases...</p></div>;
+
   return (
     <div className="card">
-      <h2>📖 Frase del día</h2>
-      <p className="frase-ingles">{frases[indice].ingles}</p>
-      <p className="frase-español">{frases[indice].español}</p>
-      <button onClick={siguiente}>Nueva frase ↻</button>
+      <h2>📚 Frase del día</h2>
+      {frases.length > 0 && (
+        <>
+          <p className="frase-ingles">{frases[indice].idioma}</p>
+          <p className="frase-español">{frases[indice].español}</p>
+          <button onClick={siguiente}>Nueva frase ➡</button>
+        </>
+      )}
     </div>
   );
 }
