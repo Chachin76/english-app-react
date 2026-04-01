@@ -1,25 +1,19 @@
 import { useState } from 'react';
 import { registrarActividad } from './Progreso';
 
-function Corrector() {
+function Corrector({ idioma = 'ingles' }) {
   const [texto, setTexto]         = useState('');
   const [resultado, setResultado] = useState(null);
   const [cargando, setCargando]   = useState(false);
-
   async function verificar() {
     if (!texto.trim()) return;
-
-    
-
-
     setCargando(true);
     setResultado(null);
-
     try {
       const resp = await fetch('https://english-app-backend-ifyj.onrender.com/corregir', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ texto })
+        body:    JSON.stringify({ texto, idioma })
       });
       const datos = await resp.json();
       setResultado(datos.respuesta);

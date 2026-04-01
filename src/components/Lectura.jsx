@@ -13,7 +13,7 @@ const TEMAS = [
   { emoji:'🎵', tema:'music and arts', label:'Música' },
 ];
 
-function Lectura({ nivelUsuario }) {
+function Lectura({ nivelUsuario, idioma = 'ingles' }) {
   const [lectura, setLectura]           = useState(null);
   const [cargando, setCargando]         = useState(false);
   const [temaCustom, setTemaCustom]     = useState('');
@@ -40,7 +40,7 @@ function Lectura({ nivelUsuario }) {
       const resp = await fetch('https://english-app-backend-ifyj.onrender.com/lectura/generar', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ nivel, tema })
+      body:    JSON.stringify({ nivel, tema, idioma })  
       });
       const datos = await resp.json();
       setLectura(datos);

@@ -15,7 +15,7 @@ const SITUACIONES = [
   { id:'universidad', emoji:'🎓', titulo:'En la universidad', descripcion:'Hablá con un consejero académico', rol:'Sos un consejero academico de una universidad americana', inicio:"Hello! I'm Professor Johnson, the academic advisor. What brings you in today?" },
 ];
 
-function Situaciones({ nivelUsuario }) {
+function Situaciones({ nivelUsuario, idioma = 'ingles' }) {
   const [situacionElegida, setSituacion]    = useState(null);
   const [situacionCustom, setSituacionCustom] = useState('');
   const [mensajes, setMensajes]             = useState([]);
@@ -110,7 +110,7 @@ recognition.interimResults = true;
       const resp = await fetch('https://english-app-backend-ifyj.onrender.com/situacion', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ situacion: situacionElegida.rol, historial: nuevosMensajes, nivel })
+       body: JSON.stringify({ situacion: situacionElegida.rol, historial: nuevosMensajes, nivel, idioma }) 
       });
       const datos  = await resp.json();
       const nuevos = [...nuevosMensajes, { role: 'assistant', content: datos.respuesta }];
@@ -129,7 +129,7 @@ recognition.interimResults = true;
       const resp = await fetch('https://english-app-backend-ifyj.onrender.com/resumen-situacion', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ situacion: situacionElegida.titulo, historial: mensajes, nivel })
+      body: JSON.stringify({ situacion: situacionElegida.titulo, historial: mensajes, nivel, idioma })  
       });
       const datos = await resp.json();
       setResumen(datos);

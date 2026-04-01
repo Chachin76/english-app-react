@@ -13,7 +13,7 @@ const ESTRUCTURAS = [
   "It depends on...",
 ];
 
-function Gramatica() {
+function Gramatica({ idioma = 'ingles' }) {
   const [estructuraSeleccionada, setEstructuraSeleccionada] = useState('');
   const [estructuraCustom, setEstructuraCustom]             = useState('');
   const [mostrarCustom, setMostrarCustom]                   = useState(false);
@@ -37,8 +37,7 @@ function Gramatica() {
       const resp = await fetch('https://english-app-backend-ifyj.onrender.com/gramatica', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ estructura })
-      });
+body:    JSON.stringify({ estructura, idioma })      });
       const resultado = await resp.json();
       setDatos(resultado);
     } catch(e) {

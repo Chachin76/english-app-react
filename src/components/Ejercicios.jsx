@@ -8,7 +8,7 @@ const TIPOS = [
   { id:'ordenar',     emoji:'🔀', label:'Ordenar',      descripcion:'Ordená las palabras para formar una oración' },
 ];
 
-function Ejercicios({ nivelUsuario }) {
+function Ejercicios({ nivelUsuario, idioma = 'ingles' }) {
   const [ejercicios, setEjercicios]   = useState([]);
   const [cargando, setCargando]       = useState(false);
   const [tipoActual, setTipo]         = useState('');
@@ -37,7 +37,7 @@ function Ejercicios({ nivelUsuario }) {
       const resp = await fetch('https://english-app-backend-ifyj.onrender.com/ejercicios', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ tipo, nivel })
+        body:    JSON.stringify({ tipo, nivel, idioma })
       });
       const datos = await resp.json();
       setEjercicios(datos.ejercicios);

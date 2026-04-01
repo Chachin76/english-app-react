@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { registrarActividad } from './Progreso';
 
-function Chat() {
+function Chat({ idioma = 'ingles' }) {
   const [mensajes, setMensajes]     = useState([
     { rol: 'tutor', texto: "Hello! I'm your English tutor. Let's practice! What would you like to talk about? 😊" }
   ]);
@@ -87,7 +87,7 @@ recognition.interimResults = true;
       const resp = await fetch('https://english-app-backend-ifyj.onrender.com/chat', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ historial })
+      body:    JSON.stringify({ historial, idioma })  
       });
 
       const datos  = await resp.json();

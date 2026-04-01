@@ -10,7 +10,7 @@ const CATEGORIAS = [
   { id:'trabajo',       emoji:'💼', label:'Inglés de negocios',      descripcion:'Expresiones formales del mundo laboral' },
 ];
 
-function Cultura({ nivelUsuario }) {
+function Cultura({ nivelUsuario, idioma = 'ingles' }) {
   const [items, setItems]             = useState([]);
   const [cargando, setCargando]       = useState(false);
   const [categoriaActual, setCategoria] = useState('');
@@ -27,7 +27,7 @@ function Cultura({ nivelUsuario }) {
       const resp = await fetch('https://english-app-backend-ifyj.onrender.com/cultura', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ categoria, nivel })
+        body:    JSON.stringify({ categoria, nivel, idioma })
       });
       const datos = await resp.json();
       setItems(datos.items);

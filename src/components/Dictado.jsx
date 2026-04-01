@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function Dictado({ nivelUsuario }) {
+function Dictado({ nivelUsuario, idioma = 'ingles' }) {
   const [frases, setFrases]             = useState([]);
   const [indice, setIndice]             = useState(0);
   const [escrito, setEscrito]           = useState('');
@@ -22,7 +22,7 @@ function Dictado({ nivelUsuario }) {
     try {
       const resp = await fetch('https://english-app-backend-ifyj.onrender.com/dictado/frases', {
         method: 'POST', headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ nivel, cantidad: 5 })
+      body: JSON.stringify({ nivel, cantidad: 5, idioma })  
       });
       const datos = await resp.json();
       setFrases(datos.frases);
@@ -81,7 +81,7 @@ function Dictado({ nivelUsuario }) {
     try {
       const resp = await fetch('https://english-app-backend-ifyj.onrender.com/dictado/corregir', {
         method: 'POST', headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({ original: frases[indice].texto, escrito: escrito.trim() })
+      body: JSON.stringify({ original: frases[indice].texto, escrito: escrito.trim(), idioma })  
       });
       const datos = await resp.json();
       setResultado(datos);

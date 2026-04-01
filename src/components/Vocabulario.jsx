@@ -6,7 +6,7 @@ const INTERVALOS = {
   'facil':   7,
 };
 
-function Vocabulario({ nivelUsuario }) {
+function Vocabulario({ nivelUsuario, idioma = 'ingles' }) {
   const [palabras, setPalabras]       = useState([]);
   const [indice, setIndice]           = useState(0);
   const [mostrarRespuesta, setMostrar] = useState(false);
@@ -30,7 +30,7 @@ function Vocabulario({ nivelUsuario }) {
       const resp = await fetch('https://english-app-backend-ifyj.onrender.com/vocabulario', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({
+        body:    JSON.stringify({ nivel: nivelUsuario, palabras_vistas: [], idioma }) 
           nivel,
           palabras_vistas: palabrasVistas.slice(-50)
         })
