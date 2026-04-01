@@ -1,17 +1,16 @@
 import { useState, useRef } from 'react';
 
-const ESTRUCTURAS = [
-  "Do you have...?",
-  "I would like to...",
-  "Have you ever...?",
-  "How long have you...?",
-  "I used to...",
-  "What do you think about...?",
-  "I agree / I disagree with...",
-  "Can you help me with...?",
-  "I'm looking forward to...",
-  "It depends on...",
-];
+const ESTRUCTURAS_POR_IDIOMA = {
+  ingles:    ["Do you have...?", "I would like to...", "Have you ever...?", "How long have you...?", "I used to...", "What do you think about...?", "I agree / I disagree with...", "Can you help me with...?", "I'm looking forward to...", "It depends on..."],
+  frances:   ["Est-ce que tu as...?", "Je voudrais...", "As-tu déjà...?", "Depuis combien de temps...?", "J'avais l'habitude de...", "Qu'est-ce que tu penses de...?", "Je suis d'accord / pas d'accord", "Tu peux m'aider avec...?", "J'ai hâte de...", "Ça dépend de..."],
+  portugues: ["Você tem...?", "Eu gostaria de...", "Você já...?", "Há quanto tempo...?", "Eu costumava...", "O que você acha de...?", "Eu concordo / discordo", "Você pode me ajudar com...?", "Estou ansioso para...", "Depende de..."],
+  italiano:  ["Hai...?", "Vorrei...", "Hai mai...?", "Da quanto tempo...?", "Ero solito...", "Cosa pensi di...?", "Sono d'accordo / non sono d'accordo", "Puoi aiutarmi con...?", "Non vedo l'ora di...", "Dipende da..."],
+  aleman:    ["Hast du...?", "Ich möchte...", "Hast du jemals...?", "Wie lange...?", "Ich pflegte...", "Was denkst du über...?", "Ich stimme zu / nicht zu", "Kannst du mir helfen mit...?", "Ich freue mich auf...", "Es hängt ab von..."],
+  espanol:   ["¿Tienes...?", "Me gustaría...", "¿Alguna vez has...?", "¿Desde hace cuánto...?", "Solía...", "¿Qué piensas sobre...?", "Estoy de acuerdo / en desacuerdo", "¿Puedes ayudarme con...?", "Tengo ganas de...", "Depende de..."],
+  chino:     ["你有...吗?", "我想要...", "你曾经...吗?", "你...多久了?", "我以前...", "你觉得...怎么样?", "我同意/不同意", "你能帮我...吗?", "我期待...", "这取决于..."],
+  japones:   ["〜がありますか?", "〜したいです", "〜したことがありますか?", "どのくらい〜していますか?", "以前は〜していました", "〜についてどう思いますか?", "賛成/反対です", "〜を手伝ってもらえますか?", "〜を楽しみにしています", "〜によります"],
+};
+};;
 
 function Gramatica({ idioma = 'ingles' }) {
   const [estructuraSeleccionada, setEstructuraSeleccionada] = useState('');
