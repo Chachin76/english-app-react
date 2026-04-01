@@ -58,25 +58,25 @@ function App() {
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', marginTop: '8px', flexWrap: 'wrap' }}>
             
             {/* Selector de idioma */}
-            <div style={{ position: 'relative' }}>
-              <button
-                onClick={() => setMostrarIdiomas(!mostrarIdiomas)}
-                style={{ background: '#e8f0fe', color: '#1a237e', border: 'none', borderRadius: '12px', padding: '4px 12px', fontSize: '0.82rem', fontWeight: '500', cursor: 'pointer' }}>
-                {idiomaActual?.bandera} {idiomaActual?.nombre} ▼
-              </button>
-              {mostrarIdiomas && (
-                <div style={{ position: 'absolute', top: '32px', left: '0', background: 'white', borderRadius: '12px', boxShadow: '0 4px 20px rgba(0,0,0,0.15)', zIndex: 999, minWidth: '180px', maxHeight: '300px', overflowY: 'auto' }} >
-                  {IDIOMAS.map(i => (
-                    <button
-                      key={i.codigo}
-                      onClick={() => handleIdioma(i.codigo)}
-                      style={{ display: 'block', width: '100%', padding: '10px 16px', background: idioma === i.codigo ? '#e8f0fe' : 'white', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '0.9rem', fontWeight: idioma === i.codigo ? '600' : '400' }}>
-                      {i.bandera} {i.nombre}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+          <div style={{ position: 'relative' }}>
+  <button
+    onClick={() => setMostrarIdiomas(!mostrarIdiomas)}
+    style={{ background: '#e8f0fe', color: '#1a237e', border: 'none', borderRadius: '12px', padding: '4px 12px', fontSize: '0.82rem', fontWeight: '600', cursor: 'pointer' }}>
+    {idiomaActual?.bandera} {idiomaActual?.nombre} ▼
+  </button>
+  {mostrarIdiomas && (
+    <div style={{ position: 'fixed', top: 'auto', left: 'auto', background: 'white', borderRadius: '12px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)', zIndex: 9999, minWidth: '180px', maxHeight: '320px', overflowY: 'auto', border: '1px solid #ddd' }}>
+      {IDIOMAS.map(i => (
+        <div
+          key={i.codigo}
+          onClick={() => handleIdioma(i.codigo)}
+          style={{ display: 'block', width: '100%', padding: '10px 16px', background: idioma === i.codigo ? '#e8f0fe' : 'white', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '0.9rem', fontWeight: idioma === i.codigo ? '600' : '400', color: '#333' }}>
+          {i.bandera} {i.nombre}
+        </div>
+      ))}
+    </div>
+  )}
+</div>  
 
             {nivelUsuario && (
               <span style={{ background: '#e8f0fe', color: '#1a237e', padding: '4px 12px', borderRadius: '12px', fontSize: '0.82rem', fontWeight: '500' }}>
