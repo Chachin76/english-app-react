@@ -65,7 +65,7 @@ function App() {
                 {idiomaActual?.bandera} {idiomaActual?.nombre} ▼
               </button>
               {mostrarIdiomas && (
-                <div style={{ position: 'absolute', top: '32px', left: '0', background: 'white', borderRadius: '12px', boxShadow: '0 4px 20px rgba(0,0,0,0.15)', zIndex: 100, minWidth: '160px', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', top: '32px', left: '0', background: 'white', borderRadius: '12px', boxShadow: '0 4px 20px rgba(0,0,0,0.15)', zIndex: 999, minWidth: '180px', maxHeight: '300px', overflowY: 'auto' }} >
                   {IDIOMAS.map(i => (
                     <button
                       key={i.codigo}
