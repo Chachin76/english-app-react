@@ -30,10 +30,7 @@ function Vocabulario({ nivelUsuario, idioma = 'ingles' }) {
       const resp = await fetch('https://english-app-backend-ifyj.onrender.com/vocabulario', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ nivel: nivelUsuario, palabras_vistas: [], idioma }) 
-          nivel,
-          palabras_vistas: palabrasVistas.slice(-50)
-        })
+       body:    JSON.stringify({ nivel: nivelUsuario, palabras_vistas: palabrasVistas.slice(-50), idioma })
       });
       const datos = await resp.json();
       setPalabras(datos.palabras);
