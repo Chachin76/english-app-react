@@ -52,12 +52,21 @@ body:    JSON.stringify({ estructura, idioma })      });
     setMostrarCustom(false);
     generar(estructura);
   }
-
+const VOCES_IDIOMA = {
+  ingles:    'en-US',
+  frances:   'fr-FR',
+  portugues: 'pt-BR',
+  italiano:  'it-IT',
+  aleman:    'de-DE',
+  espanol:   'es-ES',
+  chino:     'zh-CN',
+  japones:   'ja-JP',
+};
   function hablar(texto, rate) {
     if (!window.speechSynthesis) return;
     window.speechSynthesis.cancel();
     const u     = new SpeechSynthesisUtterance(texto);
-    u.lang      = acento;
+  u.lang      = VOCES_IDIOMA[idioma] || acento;  
     u.rate      = rate || velocidad;
     const voces = window.speechSynthesis.getVoices();
     const voz   = voces.find(v => v.lang === acento) || voces[0];
@@ -81,7 +90,7 @@ body:    JSON.stringify({ estructura, idioma })      });
     }
 
     const recognition      = new SpeechRecognition();
-    recognition.lang       = 'en-US';
+    recognition.lang       = VOCES_IDIOMA[idioma] || 'en-US';
     recognition.continuous = false;
 
     recognition.onstart = () => setEscuchando(indice);
