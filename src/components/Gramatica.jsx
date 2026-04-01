@@ -10,9 +10,9 @@ const ESTRUCTURAS_POR_IDIOMA = {
   chino:     ["你有...吗?", "我想要...", "你曾经...吗?", "你...多久了?", "我以前...", "你觉得...怎么样?", "我同意/不同意", "你能帮我...吗?", "我期待...", "这取决于..."],
   japones:   ["〜がありますか?", "〜したいです", "〜したことがありますか?", "どのくらい〜していますか?", "以前は〜していました", "〜についてどう思いますか?", "賛成/反対です", "〜を手伝ってもらえますか?", "〜を楽しみにしています", "〜によります"],
 };
-};;
 
 function Gramatica({ idioma = 'ingles' }) {
+  const ESTRUCTURAS = ESTRUCTURAS_POR_IDIOMA[idioma] || ESTRUCTURAS_POR_IDIOMA['ingles'];
   const [estructuraSeleccionada, setEstructuraSeleccionada] = useState('');
   const [estructuraCustom, setEstructuraCustom]             = useState('');
   const [mostrarCustom, setMostrarCustom]                   = useState(false);
