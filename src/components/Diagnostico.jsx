@@ -27,7 +27,8 @@ function Diagnostico({ onNivelDeterminado, idioma = 'ingles' }) {
         body: JSON.stringify({ idioma })
       });
       const datos = await resp.json();
-      setPreguntas(datos.preguntas);
+      console.log('Preguntas recibidas:', JSON.stringify(datos));
+setPreguntas(datos.preguntas);
     } catch(e) {
       console.error(e);
     } finally {
