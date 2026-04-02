@@ -27,8 +27,7 @@ function Diagnostico({ onNivelDeterminado, idioma = 'ingles' }) {
         body: JSON.stringify({ idioma })
       });
       const datos = await resp.json();
-      console.log('Preguntas recibidas:', JSON.stringify(datos));
-setPreguntas(datos.preguntas);
+      setPreguntas(datos.preguntas);
     } catch(e) {
       console.error(e);
     } finally {
@@ -87,13 +86,13 @@ setPreguntas(datos.preguntas);
     <div className="card" style={{ textAlign: 'center' }}>
       <h2>🎯 Tu nivel</h2>
       <div style={{ fontSize: '3rem', margin: '16px 0' }}>{resultado.nivel}</div>
-      <p>{resultado.descripcion}</p>
+      <p style={{ color: '#333' }}>{resultado.descripcion}</p>
       <div style={{ textAlign: 'left', marginTop: '16px' }}>
         <p><strong>✅ Puntos fuertes:</strong></p>
-        <ul>{resultado.puntos_fuertes?.map((p, i) => <li key={i}>{p}</li>)}</ul>
+        <ul>{resultado.puntos_fuertes?.map((p, i) => <li key={i} style={{ color: '#333' }}>{p}</li>)}</ul>
         <p><strong>📈 A mejorar:</strong></p>
-        <ul>{resultado.puntos_debiles?.map((p, i) => <li key={i}>{p}</li>)}</ul>
-        <p><strong>💡 Recomendación:</strong> {resultado.recomendacion}</p>
+        <ul>{resultado.puntos_debiles?.map((p, i) => <li key={i} style={{ color: '#333' }}>{p}</li>)}</ul>
+        <p style={{ color: '#333' }}><strong>💡 Recomendación:</strong> {resultado.recomendacion}</p>
       </div>
       <button onClick={reiniciar} style={{ marginTop: '16px' }}>🔄 Repetir test</button>
     </div>
@@ -101,7 +100,8 @@ setPreguntas(datos.preguntas);
 
   if (preguntas.length === 0) return (
     <div className="card" style={{ textAlign: 'center' }}>
-      <p>❌ Error cargando preguntas. <button onClick={cargarPreguntas}>Reintentar</button></p>
+      <p style={{ color: '#333' }}>❌ Error cargando preguntas.</p>
+      <button onClick={cargarPreguntas}>Reintentar</button>
     </div>
   );
 
@@ -112,11 +112,11 @@ setPreguntas(datos.preguntas);
       <h2>🎯 Test de nivel</h2>
       <p style={{ color: '#666', fontSize: '0.9rem' }}>Pregunta {preguntaActual + 1} de {preguntas.length}</p>
       <div style={{ background: '#f0f4ff', padding: '16px', borderRadius: '12px', margin: '16px 0' }}>
-        <p style={{ fontWeight: '600' }}>{pregunta.pregunta}</p>
+        <p style={{ fontWeight: '600', color: '#333', margin: 0 }}>{pregunta.pregunta}</p>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        {pregunta.opciones?.map((op, i) => (
-          <button
+        {pregunta.opciones && pregunta.opciones.map((op, i) => (
+          <div
             key={i}
             onClick={() => responder(op)}
             style={{
@@ -125,13 +125,13 @@ setPreguntas(datos.preguntas);
               border: '2px solid',
               borderColor: seleccion === op ? '#4f46e5' : '#ddd',
               background: seleccion === op ? '#e8eaf6' : 'white',
-              color: '#333'
               cursor: 'pointer',
               textAlign: 'left',
-              fontWeight: seleccion === op ? '600' : '400'
+              fontWeight: seleccion === op ? '600' : '400',
+              color: '#333'
             }}>
             {op}
-          </button>
+          </div>
         ))}
       </div>
       <button
