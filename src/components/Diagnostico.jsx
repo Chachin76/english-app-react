@@ -125,6 +125,7 @@ setPreguntas(datos.preguntas);
               border: '2px solid',
               borderColor: seleccion === op ? '#4f46e5' : '#ddd',
               background: seleccion === op ? '#e8eaf6' : 'white',
+              color: '#333'
               cursor: 'pointer',
               textAlign: 'left',
               fontWeight: seleccion === op ? '600' : '400'
