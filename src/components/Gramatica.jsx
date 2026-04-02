@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const ESTRUCTURAS_POR_IDIOMA = {
   ingles:    ["Do you have...?", "I would like to...", "Have you ever...?", "How long have you...?", "I used to...", "What do you think about...?", "I agree / I disagree with...", "Can you help me with...?", "I'm looking forward to...", "It depends on..."],
@@ -13,6 +13,10 @@ const ESTRUCTURAS_POR_IDIOMA = {
 
 function Gramatica({ idioma = 'ingles' }) {
   const ESTRUCTURAS = ESTRUCTURAS_POR_IDIOMA[idioma] || ESTRUCTURAS_POR_IDIOMA['ingles'];
+ useEffect(() => {
+  setEstructuraSeleccionada('');
+  setDatos(null);
+}, [idioma]); 
   const [estructuraSeleccionada, setEstructuraSeleccionada] = useState('');
   const [estructuraCustom, setEstructuraCustom]             = useState('');
   const [mostrarCustom, setMostrarCustom]                   = useState(false);
