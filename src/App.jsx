@@ -1,5 +1,4 @@
-﻿@'
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { guardarIdiomaYNivel, obtenerProgreso } from "./progresoSupabase";
 import { supabase } from "./supabase";
 import ProtectedRoute from "./components/ProtectedRoute";
