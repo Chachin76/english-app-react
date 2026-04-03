@@ -17,42 +17,39 @@ import Ejercicios from './components/Ejercicios';
 import './App.css';
 
 const IDIOMAS = [
-  { codigo: 'ingles',    nombre: 'Inglés',     bandera: '🇺🇸' },
-  { codigo: 'frances',   nombre: 'Francés',    bandera: '🇫🇷' },
-  { codigo: 'portugues', nombre: 'Portugués',  bandera: '🇧🇷' },
-  { codigo: 'italiano',  nombre: 'Italiano',   bandera: '🇮🇹' },
-  { codigo: 'aleman',    nombre: 'Alemán',     bandera: '🇩🇪' },
-  { codigo: 'espanol',   nombre: 'Español',    bandera: '🇪🇸' },
-  { codigo: 'chino',     nombre: 'Chino',      bandera: '🇨🇳' },
-  { codigo: 'japones',   nombre: 'Japonés',    bandera: '🇯🇵' },
+  { codigo: 'ingles',    nombre: 'Inglés',    bandera: '🇺🇸' },
+  { codigo: 'frances',   nombre: 'Francés',   bandera: '🇫🇷' },
+  { codigo: 'portugues', nombre: 'Portugués', bandera: '🇧🇷' },
+  { codigo: 'italiano',  nombre: 'Italiano',  bandera: '🇮🇹' },
+  { codigo: 'aleman',    nombre: 'Alemán',    bandera: '🇩🇪' },
+  { codigo: 'espanol',   nombre: 'Español',   bandera: '🇪🇸' },
+  { codigo: 'chino',     nombre: 'Chino',     bandera: '🇨🇳' },
+  { codigo: 'japones',   nombre: 'Japonés',   bandera: '🇯🇵' },
 ];
 
 function App() {
   const [moduloActivo, setModuloActivo] = useState('corrector');
-  const [nivelUsuario, setNivelUsuario] = useState(
-    localStorage.getItem('nivel_ingles') || ''
-  );
-  const [idioma, setIdioma] = useState(
-    localStorage.getItem('idioma_seleccionado') || 'ingles'
-  );
+  const [nivelUsuario, setNivelUsuario] = useState(localStorage.getItem('nivel_ingles') || '');
+  const [idioma, setIdioma] = useState(localStorage.getItem('idioma_seleccionado') || 'ingles');
   const [mostrarIdiomas, setMostrarIdiomas] = useState(false);
-useEffect(() => {
-  cargarProgresoInicial();
-}, []);
 
-async function cargarProgresoInicial() {
-  const progreso = await obtenerProgreso();
-  if (progreso) {
-    if (progreso.idioma) {
-      setIdioma(progreso.idioma);
-      localStorage.setItem('idioma_seleccionado', progreso.idioma);
+  useEffect(() => {
+    async function cargarProgreso() {
+      const progreso = await obtenerProgreso();
+      if (progreso) {
+        if (progreso.idioma) {
+          setIdioma(progreso.idioma);
+          localStorage.setItem('idioma_seleccionado', progreso.idioma);
+        }
+        if (progreso.nivel) {
+          setNivelUsuario(progreso.nivel);
+          localStorage.setItem('nivel_ingles', progreso.nivel);
+        }
+      }
     }
-    if (progreso.nivel) {
-      setNivelUsuario(progreso.nivel);
-      localStorage.setItem('nivel_ingles', progreso.nivel);
-    }
-  }
-}
+    cargarProgreso();
+  }, []);
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
   };
@@ -60,6 +57,7 @@ async function cargarProgresoInicial() {
   const handleIdioma = (codigo) => {
     setIdioma(codigo);
     localStorage.setItem('idioma_seleccionado', codigo);
+    guardarIdiomaYNivel(codigo, nivelUsuario);
     setMostrarIdiomas(false);
   };
 
@@ -71,30 +69,26 @@ async function cargarProgresoInicial() {
         <header>
           <h1>🌍 Language Learning App</h1>
           <p>Tu tutor de idiomas personal con IA</p>
-
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', marginTop: '8px', flexWrap: 'wrap' }}>
-            
-            {/* Selector de idioma */}
-          <div style={{ position: 'relative' }}>
-  <button
-    onClick={() => setMostrarIdiomas(!mostrarIdiomas)}
-    style={{ background: '#e8f0fe', color: '#1a237e', border: 'none', borderRadius: '12px', padding: '4px 12px', fontSize: '0.82rem', fontWeight: '600', cursor: 'pointer' }}>
-    {idiomaActual?.bandera} {idiomaActual?.nombre} ▼
-  </button>
-  {mostrarIdiomas && (
-    <div style={{ position: 'fixed', top: 'auto', left: 'auto', background: 'white', borderRadius: '12px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)', zIndex: 9999, minWidth: '180px', maxHeight: '320px', overflowY: 'auto', border: '1px solid #ddd' }}>
-      {IDIOMAS.map(i => (
-        <div
-          key={i.codigo}
-          onClick={() => handleIdioma(i.codigo)}
-          style={{ display: 'block', width: '100%', padding: '10px 16px', background: idioma === i.codigo ? '#e8f0fe' : 'white', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '0.9rem', fontWeight: idioma === i.codigo ? '600' : '400', color: '#333' }}>
-          {i.bandera} {i.nombre}
-        </div>
-      ))}
-    </div>
-  )}
-</div>  
-
+            <div style={{ position: 'relative' }}>
+              <button
+                onClick={() => setMostrarIdiomas(!mostrarIdiomas)}
+                style={{ background: '#e8f0fe', color: '#1a237e', border: 'none', borderRadius: '12px', padding: '4px 12px', fontSize: '0.82rem', fontWeight: '600', cursor: 'pointer' }}>
+                {idiomaActual?.bandera} {idiomaActual?.nombre} ▼
+              </button>
+              {mostrarIdiomas && (
+                <div style={{ position: 'fixed', top: 'auto', left: 'auto', background: 'white', borderRadius: '12px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)', zIndex: 9999, minWidth: '180px', maxHeight: '320px', overflowY: 'auto', border: '1px solid #ddd' }}>
+                  {IDIOMAS.map(i => (
+                    <div
+                      key={i.codigo}
+                      onClick={() => handleIdioma(i.codigo)}
+                      style={{ display: 'block', width: '100%', padding: '10px 16px', background: idioma === i.codigo ? '#e8f0fe' : 'white', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '0.9rem', fontWeight: idioma === i.codigo ? '600' : '400', color: '#333' }}>
+                      {i.bandera} {i.nombre}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
             {nivelUsuario && (
               <span style={{ background: '#e8f0fe', color: '#1a237e', padding: '4px 12px', borderRadius: '12px', fontSize: '0.82rem', fontWeight: '500' }}>
                 Nivel {nivelUsuario}
@@ -126,7 +120,7 @@ async function cargarProgresoInicial() {
           {moduloActivo === 'conversacion' && <Chat idioma={idioma} />}
           {moduloActivo === 'frases'       && <Frases idioma={idioma} />}
           {moduloActivo === 'gramatica'    && <Gramatica idioma={idioma} />}
-          {moduloActivo === 'diagnostico'  && <Diagnostico idioma={idioma} onNivelDeterminado={(nivel) => setNivelUsuario(nivel)} />}
+          {moduloActivo === 'diagnostico'  && <Diagnostico idioma={idioma} onNivelDeterminado={(nivel) => { setNivelUsuario(nivel); guardarIdiomaYNivel(idioma, nivel); }} />}
           {moduloActivo === 'vocabulario'  && <Vocabulario idioma={idioma} nivelUsuario={nivelUsuario} />}
           {moduloActivo === 'situaciones'  && <Situaciones idioma={idioma} nivelUsuario={nivelUsuario} />}
           {moduloActivo === 'dictado'      && <Dictado idioma={idioma} nivelUsuario={nivelUsuario} />}
