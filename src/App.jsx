@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 
 const TEXTOS_IDIOMA = {
   ingles:    { titulo: 'Corrector de escritura', descripcion: 'Escribi en ingles y la IA te corrige.', placeholder: 'Write something in English...', boton: 'Check my writing' },
@@ -61,3 +61,4 @@ function Corrector({ idioma = 'ingles' }) {
 }
 
 export default Corrector;
+
