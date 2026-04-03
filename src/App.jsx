@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { guardarIdiomaYNivel, obtenerProgreso } from "./progresoSupabase";
 import { supabase } from "./supabase";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -17,14 +17,14 @@ import Ejercicios from "./components/Ejercicios";
 import "./App.css";
 
 const IDIOMAS = [
-  { codigo: "ingles",    nombre: "Ingles",    bandera: "🇺🇸" },
-  { codigo: "frances",   nombre: "Frances",   bandera: "🇫🇷" },
-  { codigo: "portugues", nombre: "Portugues", bandera: "🇧🇷" },
-  { codigo: "italiano",  nombre: "Italiano",  bandera: "🇮🇹" },
-  { codigo: "aleman",    nombre: "Aleman",    bandera: "🇩🇪" },
-  { codigo: "espanol",   nombre: "Espanol",   bandera: "🇪🇸" },
-  { codigo: "chino",     nombre: "Chino",     bandera: "🇨🇳" },
-  { codigo: "japones",   nombre: "Japones",   bandera: "🇯🇵" },
+  { codigo: "ingles",    nombre: "Ingles",    bandera: "US" },
+  { codigo: "frances",   nombre: "Frances",   bandera: "FR" },
+  { codigo: "portugues", nombre: "Portugues", bandera: "BR" },
+  { codigo: "italiano",  nombre: "Italiano",  bandera: "IT" },
+  { codigo: "aleman",    nombre: "Aleman",    bandera: "DE" },
+  { codigo: "espanol",   nombre: "Espanol",   bandera: "ES" },
+  { codigo: "chino",     nombre: "Chino",     bandera: "CN" },
+  { codigo: "japones",   nombre: "Japones",   bandera: "JP" },
 ];
 
 function App() {
@@ -37,22 +37,14 @@ function App() {
     async function cargarProgreso() {
       const progreso = await obtenerProgreso();
       if (progreso) {
-        if (progreso.idioma) {
-          setIdioma(progreso.idioma);
-          localStorage.setItem("idioma_seleccionado", progreso.idioma);
-        }
-        if (progreso.nivel) {
-          setNivelUsuario(progreso.nivel);
-          localStorage.setItem("nivel_ingles", progreso.nivel);
-        }
+        if (progreso.idioma) { setIdioma(progreso.idioma); localStorage.setItem("idioma_seleccionado", progreso.idioma); }
+        if (progreso.nivel) { setNivelUsuario(progreso.nivel); localStorage.setItem("nivel_ingles", progreso.nivel); }
       }
     }
     cargarProgreso();
   }, []);
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-  };
+  const handleLogout = async () => { await supabase.auth.signOut(); };
 
   const handleIdioma = (codigo) => {
     setIdioma(codigo);
@@ -67,46 +59,40 @@ function App() {
     <ProtectedRoute>
       <div className="app">
         <header>
-          <h1>🌍 Language Learning App</h1>
+          <h1>Language Learning App</h1>
           <p>Tu tutor de idiomas personal con IA</p>
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "8px", marginTop: "8px", flexWrap: "wrap" }}>
             <div style={{ position: "relative" }}>
               <button onClick={() => setMostrarIdiomas(!mostrarIdiomas)} style={{ background: "#e8f0fe", color: "#1a237e", border: "none", borderRadius: "12px", padding: "4px 12px", fontSize: "0.82rem", fontWeight: "600", cursor: "pointer" }}>
-                {idiomaActual?.bandera} {idiomaActual?.nombre} ▼
+                {idiomaActual?.bandera} {idiomaActual?.nombre} v
               </button>
               {mostrarIdiomas && (
                 <div style={{ position: "fixed", top: "auto", left: "auto", background: "white", borderRadius: "12px", boxShadow: "0 4px 20px rgba(0,0,0,0.3)", zIndex: 9999, minWidth: "180px", maxHeight: "320px", overflowY: "auto", border: "1px solid #ddd" }}>
                   {IDIOMAS.map(i => (
-                    <div key={i.codigo} onClick={() => handleIdioma(i.codigo)} style={{ display: "block", width: "100%", padding: "10px 16px", background: idioma === i.codigo ? "#e8f0fe" : "white", border: "none", textAlign: "left", cursor: "pointer", fontSize: "0.9rem", fontWeight: idioma === i.codigo ? "600" : "400", color: "#333" }}>
+                    <div key={i.codigo} onClick={() => handleIdioma(i.codigo)} style={{ padding: "10px 16px", background: idioma === i.codigo ? "#e8f0fe" : "white", cursor: "pointer", fontSize: "0.9rem", fontWeight: idioma === i.codigo ? "600" : "400", color: "#333" }}>
                       {i.bandera} {i.nombre}
                     </div>
                   ))}
                 </div>
               )}
             </div>
-            {nivelUsuario && (
-              <span style={{ background: "#e8f0fe", color: "#1a237e", padding: "4px 12px", borderRadius: "12px", fontSize: "0.82rem", fontWeight: "500" }}>
-                Nivel {nivelUsuario}
-              </span>
-            )}
-            <button onClick={handleLogout} style={{ background: "#fee2e2", color: "#991b1b", border: "none", borderRadius: "12px", padding: "4px 12px", fontSize: "0.82rem", fontWeight: "500", cursor: "pointer" }}>
-              Cerrar sesion
-            </button>
+            {nivelUsuario && (<span style={{ background: "#e8f0fe", color: "#1a237e", padding: "4px 12px", borderRadius: "12px", fontSize: "0.82rem", fontWeight: "500" }}>Nivel {nivelUsuario}</span>)}
+            <button onClick={handleLogout} style={{ background: "#fee2e2", color: "#991b1b", border: "none", borderRadius: "12px", padding: "4px 12px", fontSize: "0.82rem", fontWeight: "500", cursor: "pointer" }}>Cerrar sesion</button>
           </div>
         </header>
         <nav style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "8px", marginBottom: "24px" }}>
-          <button className={moduloActivo === "corrector"    ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("corrector")}>✅ Corrector</button>
-          <button className={moduloActivo === "conversacion" ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("conversacion")}>💬 Conversacion</button>
-          <button className={moduloActivo === "frases"       ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("frases")}>📚 Frases</button>
-          <button className={moduloActivo === "gramatica"    ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("gramatica")}>📝 Gramatica</button>
-          <button className={moduloActivo === "diagnostico"  ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("diagnostico")}>🎯 Mi nivel</button>
-          <button className={moduloActivo === "vocabulario"  ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("vocabulario")}>🧠 Vocabulario</button>
-          <button className={moduloActivo === "situaciones"  ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("situaciones")}>🎭 Situaciones</button>
-          <button className={moduloActivo === "dictado"      ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("dictado")}>🎧 Dictado</button>
-          <button className={moduloActivo === "lectura"      ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("lectura")}>📖 Lectura</button>
-          <button className={moduloActivo === "progreso"     ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("progreso")}>📊 Mi progreso</button>
-          <button className={moduloActivo === "cultura"      ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("cultura")}>🌎 Cultura</button>
-          <button className={moduloActivo === "ejercicios"   ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("ejercicios")}>✏️ Ejercicios</button>
+          <button className={moduloActivo === "corrector"    ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("corrector")}>Corrector</button>
+          <button className={moduloActivo === "conversacion" ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("conversacion")}>Conversacion</button>
+          <button className={moduloActivo === "frases"       ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("frases")}>Frases</button>
+          <button className={moduloActivo === "gramatica"    ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("gramatica")}>Gramatica</button>
+          <button className={moduloActivo === "diagnostico"  ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("diagnostico")}>Mi nivel</button>
+          <button className={moduloActivo === "vocabulario"  ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("vocabulario")}>Vocabulario</button>
+          <button className={moduloActivo === "situaciones"  ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("situaciones")}>Situaciones</button>
+          <button className={moduloActivo === "dictado"      ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("dictado")}>Dictado</button>
+          <button className={moduloActivo === "lectura"      ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("lectura")}>Lectura</button>
+          <button className={moduloActivo === "progreso"     ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("progreso")}>Mi progreso</button>
+          <button className={moduloActivo === "cultura"      ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("cultura")}>Cultura</button>
+          <button className={moduloActivo === "ejercicios"   ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("ejercicios")}>Ejercicios</button>
         </nav>
         <main>
           {moduloActivo === "corrector"    && <Corrector idioma={idioma} />}
@@ -128,4 +114,3 @@ function App() {
 }
 
 export default App;
-'@ | Set-Content src\App.jsx -Encoding UTF8
