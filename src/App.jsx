@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { guardarIdiomaYNivel, obtenerProgreso } from './progresoSupabase';
 import { supabase } from './supabase';
 import ProtectedRoute from './components/ProtectedRoute';
 import Frases from './components/Frases';
@@ -35,7 +36,23 @@ function App() {
     localStorage.getItem('idioma_seleccionado') || 'ingles'
   );
   const [mostrarIdiomas, setMostrarIdiomas] = useState(false);
+useEffect(() => {
+  cargarProgresoInicial();
+}, []);
 
+async function cargarProgresoInicial() {
+  const progreso = await obtenerProgreso();
+  if (progreso) {
+    if (progreso.idioma) {
+      setIdioma(progreso.idioma);
+      localStorage.setItem('idioma_seleccionado', progreso.idioma);
+    }
+    if (progreso.nivel) {
+      setNivelUsuario(progreso.nivel);
+      localStorage.setItem('nivel_ingles', progreso.nivel);
+    }
+  }
+}
   const handleLogout = async () => {
     await supabase.auth.signOut();
   };

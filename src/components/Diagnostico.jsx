@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { guardarIdiomaYNivel, resetearNivel } from '../progresoSupabase';
 
 function Diagnostico({ onNivelDeterminado, idioma = 'ingles' }) {
   const [preguntas, setPreguntas] = useState([]);
@@ -61,8 +62,9 @@ function Diagnostico({ onNivelDeterminado, idioma = 'ingles' }) {
         });
         const datos = await resp.json();
         setResultado(datos);
-        onNivelDeterminado(datos.nivel);
-        localStorage.setItem('nivel_ingles', datos.nivel);
+      onNivelDeterminado(datos.nivel);
+localStorage.setItem('nivel_ingles', datos.nivel);
+await guardarIdiomaYNivel(idioma, datos.nivel);  
       } catch(e) {
         console.error(e);
       } finally {
@@ -94,7 +96,15 @@ function Diagnostico({ onNivelDeterminado, idioma = 'ingles' }) {
         <ul>{resultado.puntos_debiles?.map((p, i) => <li key={i} style={{ color: '#333' }}>{p}</li>)}</ul>
         <p style={{ color: '#333' }}><strong>💡 Recomendación:</strong> {resultado.recomendacion}</p>
       </div>
-      <button onClick={reiniciar} style={{ marginTop: '16px' }}>🔄 Repetir test</button>
+     <button onClick={reiniciar} style={{ marginTop: '16px' }}>🔄 Repetir test</button>
+<button onClick={async () => {
+  await resetearNivel();
+  onNivelDeterminado('');
+  localStorage.removeItem('nivel_ingles');
+  reiniciar();
+}} style={{ marginTop: '8px', marginLeft: '8px', background: '#fee2e2', color: '#991b1b', border: 'none', borderRadius: '8px', padding: '10px 16px', cursor: 'pointer' }}>
+  🗑️ Borrar resultado
+</button> 
     </div>
   );
 
