@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { guardarIdiomaYNivel, obtenerProgreso } from "./progresoSupabase";
 import { supabase } from "./supabase";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -25,6 +25,7 @@ const IDIOMAS = [
   { codigo: "espanol",   nombre: "Espanol",   bandera: "ES" },
   { codigo: "chino",     nombre: "Chino",     bandera: "CN" },
   { codigo: "japones",   nombre: "Japones",   bandera: "JP" },
+  { codigo: "coreano",   nombre: "Coreano",   bandera: "KR" },
 ];
 
 function App() {
