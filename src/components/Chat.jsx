@@ -1,4 +1,4 @@
-﻿import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { registrarActividad } from './Progreso';
 
 const VOCES_IDIOMA = {
@@ -11,11 +11,11 @@ const SALUDO_IDIOMA = {
   frances: 'Bonjour! Je suis ton tuteur. De quoi veux-tu parler?',
   portugues: 'Ola! Sou seu tutor. Sobre o que voce quer falar?',
   italiano: 'Ciao! Sono il tuo tutor. Di cosa vuoi parlare?',
-  aleman: 'Hallo! Ich bin dein Lehrer. WorÃ¼ber mÃ¶chtest du sprechen?',
+  aleman: 'Hallo! Ich bin dein Lehrer. Worüber möchtest du sprechen?',
   espanol: 'Hola! Soy tu tutor. De que quieres hablar?',
-  chino: 'ä½ å¥½ï¼æˆ‘æ˜¯ä½ çš„è€å¸ˆã€‚ä½ æƒ³èŠä»€ä¹ˆï¼Ÿ',
-  japones: 'ã“ã‚“ã«ã¡ã¯ï¼ç§ã¯ã‚ãªãŸã®å…ˆç”Ÿã§ã™ã€‚ä½•ã«ã¤ã„ã¦è©±ã—ã¾ã™ã‹ï¼Ÿ',
-  coreano: 'ì•ˆë…•í•˜ì„¸ìš”! ì €ëŠ” ë‹¹ì‹ ì˜ ì„ ìƒë‹˜ìž…ë‹ˆë‹¤. ë¬´ì—‡ì— ëŒ€í•´ ì´ì•¼ê¸°í•˜ê³  ì‹¶ìœ¼ì„¸ìš”?',
+  chino: 'Hola! Soy tu tutor de chino. De que quieres hablar?',
+  japones: 'Hola! Soy tu tutor de japones. De que quieres hablar?',
+  coreano: 'Hola! Soy tu tutor de coreano. De que quieres hablar?',
 };
 
 function Chat({ idioma = 'ingles' }) {
@@ -86,7 +86,7 @@ function Chat({ idioma = 'ingles' }) {
         {mensajes.map((m, i) => (
           <div key={i} className={'mensaje ' + m.rol}>
             {m.texto}
-            {m.rol === 'tutor' && <button onClick={() => hablar(m.texto)} style={{ marginLeft: '8px', background: 'transparent', border: 'none', cursor: 'pointer' }}>ðŸ”Š</button>}
+            {m.rol === 'tutor' && <button onClick={() => hablar(m.texto)} style={{ marginLeft: '8px', background: 'transparent', border: 'none', cursor: 'pointer' }}>🔊</button>}
           </div>
         ))}
         {cargando && <div className="mensaje tutor">...</div>}
@@ -94,7 +94,7 @@ function Chat({ idioma = 'ingles' }) {
       </div>
       <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
         <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && enviar()} placeholder="Escribi tu mensaje..." style={{ flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid #ddd' }} />
-        <button onClick={escuchando ? detenerMicrofono : iniciarMicrofono} style={{ padding: '10px', borderRadius: '8px', background: escuchando ? '#fee2e2' : '#e8f0fe', border: 'none', cursor: 'pointer' }}>{escuchando ? 'â¹' : 'ðŸŽ¤'}</button>
+        <button onClick={escuchando ? detenerMicrofono : iniciarMicrofono} style={{ padding: '10px', borderRadius: '8px', background: escuchando ? '#fee2e2' : '#e8f0fe', border: 'none', cursor: 'pointer' }}>{escuchando ? '⏹' : '🎤'}</button>
         <button onClick={enviar} disabled={cargando} style={{ padding: '10px 16px', borderRadius: '8px', background: '#4f46e5', color: 'white', border: 'none', cursor: 'pointer' }}>Enviar</button>
       </div>
     </div>
