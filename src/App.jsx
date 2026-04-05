@@ -14,6 +14,7 @@ import Lectura from "./components/Lectura";
 import Progreso from "./components/Progreso";
 import Cultura from "./components/Cultura";
 import Ejercicios from "./components/Ejercicios";
+import MiCamino from "./components/MiCamino";
 import "./App.css";
 
 const IDIOMAS = [
@@ -93,7 +94,8 @@ function App() {
           <button className={moduloActivo === "lectura"      ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("lectura")}>Lectura</button>
           <button className={moduloActivo === "progreso"     ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("progreso")}>Mi progreso</button>
           <button className={moduloActivo === "cultura"      ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("cultura")}>Cultura</button>
-          <button className={moduloActivo === "ejercicios"   ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("ejercicios")}>Ejercicios</button>
+          <button className={moduloActivo === "camino" ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("camino")}>🗺️ Mi Camino</button>
+          <button className={moduloActivo === "ejercicios" ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("ejercicios")}>Ejercicios</button>
         </nav>
         <main>
           {moduloActivo === "corrector"    && <Corrector idioma={idioma} />}
@@ -107,6 +109,7 @@ function App() {
           {moduloActivo === "lectura"      && <Lectura idioma={idioma} nivelUsuario={nivelUsuario} />}
           {moduloActivo === "progreso"     && <Progreso />}
           {moduloActivo === "cultura"      && <Cultura idioma={idioma} nivelUsuario={nivelUsuario} />}
+          {moduloActivo === "camino"     && <MiCamino idioma={idioma} />}
           {moduloActivo === "ejercicios"   && <Ejercicios idioma={idioma} nivelUsuario={nivelUsuario} />}
         </main>
       </div>
@@ -115,3 +118,8 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
