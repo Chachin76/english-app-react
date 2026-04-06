@@ -40,12 +40,53 @@ const HIRAGANA_N = [
   { char: 'の', romaji: 'no', fonetica: 'no', ejemplo: 'のり', ejemplo_sig: 'nori = alga' },
 ];
 
+const HIRAGANA_H = [
+  { char: 'は', romaji: 'ha', fonetica: 'ha', ejemplo: 'はな', ejemplo_sig: 'hana = flor' },
+  { char: 'ひ', romaji: 'hi', fonetica: 'hi', ejemplo: 'ひと', ejemplo_sig: 'hito = persona' },
+  { char: 'ふ', romaji: 'fu', fonetica: 'fu (no hu)', ejemplo: 'ふじ', ejemplo_sig: 'fuji = Monte Fuji' },
+  { char: 'へ', romaji: 'he', fonetica: 'he', ejemplo: 'へや', ejemplo_sig: 'heya = habitacion' },
+  { char: 'ほ', romaji: 'ho', fonetica: 'ho', ejemplo: 'ほん', ejemplo_sig: 'hon = libro' },
+];
+
+const HIRAGANA_M = [
+  { char: 'ま', romaji: 'ma', fonetica: 'ma', ejemplo: 'まち', ejemplo_sig: 'machi = ciudad' },
+  { char: 'み', romaji: 'mi', fonetica: 'mi', ejemplo: 'みず', ejemplo_sig: 'mizu = agua' },
+  { char: 'む', romaji: 'mu', fonetica: 'mu', ejemplo: 'むし', ejemplo_sig: 'mushi = insecto' },
+  { char: 'め', romaji: 'me', fonetica: 'me', ejemplo: 'めがね', ejemplo_sig: 'megane = anteojos' },
+  { char: 'も', romaji: 'mo', fonetica: 'mo', ejemplo: 'もり', ejemplo_sig: 'mori = bosque' },
+];
+
+const HIRAGANA_Y = [
+  { char: 'や', romaji: 'ya', fonetica: 'ya', ejemplo: 'やま', ejemplo_sig: 'yama = montana' },
+  { char: 'ゆ', romaji: 'yu', fonetica: 'yu', ejemplo: 'ゆき', ejemplo_sig: 'yuki = nieve' },
+  { char: 'よ', romaji: 'yo', fonetica: 'yo', ejemplo: 'よる', ejemplo_sig: 'yoru = noche' },
+];
+
+const HIRAGANA_R = [
+  { char: 'ら', romaji: 'ra', fonetica: 'ra suave entre r y l', ejemplo: 'らじお', ejemplo_sig: 'rajio = radio' },
+  { char: 'り', romaji: 'ri', fonetica: 'ri', ejemplo: 'りんご', ejemplo_sig: 'ringo = manzana' },
+  { char: 'る', romaji: 'ru', fonetica: 'ru', ejemplo: 'るす', ejemplo_sig: 'rusu = ausente' },
+  { char: 'れ', romaji: 're', fonetica: 're', ejemplo: 'れんあい', ejemplo_sig: 'renai = amor' },
+  { char: 'ろ', romaji: 'ro', fonetica: 'ro', ejemplo: 'ろうか', ejemplo_sig: 'rouka = pasillo' },
+];
+
+const HIRAGANA_W = [
+  { char: 'わ', romaji: 'wa', fonetica: 'wa', ejemplo: 'わたし', ejemplo_sig: 'watashi = yo' },
+  { char: 'を', romaji: 'wo', fonetica: 'o (particula de objeto)', ejemplo: 'ほんをよむ', ejemplo_sig: 'hon wo yomu = leer un libro' },
+  { char: 'ん', romaji: 'n', fonetica: 'n nasal al final de silaba', ejemplo: 'にほん', ejemplo_sig: 'nihon = Japon' },
+];
+
 const GRUPOS = [
   { nombre: 'Vocales', chars: HIRAGANA_VOCALES },
   { nombre: 'Serie K', chars: HIRAGANA_K },
   { nombre: 'Serie S', chars: HIRAGANA_S },
   { nombre: 'Serie T', chars: HIRAGANA_T },
   { nombre: 'Serie N', chars: HIRAGANA_N },
+  { nombre: 'Serie H', chars: HIRAGANA_H },
+  { nombre: 'Serie M', chars: HIRAGANA_M },
+  { nombre: 'Serie Y', chars: HIRAGANA_Y },
+  { nombre: 'Serie R', chars: HIRAGANA_R },
+  { nombre: 'Serie W y N', chars: HIRAGANA_W },
 ];
 
 function EscrituraJapones() {
