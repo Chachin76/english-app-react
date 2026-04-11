@@ -109,11 +109,14 @@ const [resultado, setResultado] = useState(null);
 const [opciones, setOpciones] = useState([]);
 
 function iniciarPractica() {
+  const palabra = PALABRAS_PRACTICA[0];
+  const todas = [...palabra.chars, ...palabra.incorrectos];
+  const mezcladas = todas.sort(() => Math.random() - 0.5).slice(0, 6);
+  setOpciones(mezcladas);
   setModoPractica(true);
   setPalabraActual(0);
   setSeleccionados([]);
   setResultado(null);
-  generarOpciones(0);
 }
 
 function generarOpciones(indice) {
@@ -139,11 +142,18 @@ function seleccionarChar(char) {
 function siguientePalabra() {
   const siguiente = palabraActual + 1;
   if (siguiente < PALABRAS_PRACTICA.length) {
+    const palabra = PALABRAS_PRACTICA[siguiente];
+    const todas = [...palabra.chars, ...palabra.incorrectos];
+    const mezcladas = todas.sort(() => Math.random() - 0.5).slice(0, 6);
+    setOpciones(mezcladas);
     setPalabraActual(siguiente);
-    generarOpciones(siguiente);
+    setSeleccionados([]);
+    setResultado(null);
   } else {
     setModoPractica(false);
     setPalabraActual(0);
+    setSeleccionados([]);
+    setResultado(null);
   }
 }
 
