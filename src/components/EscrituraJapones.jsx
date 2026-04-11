@@ -208,7 +208,7 @@ function EscrituraJapones() {
             var yaSeleccionado = seleccionados.includes(op);
             return (
               <button key={i} onClick={() => seleccionarChar(op)} disabled={yaSeleccionado || resultado}
-                style={{ padding: '16px', fontSize: '1.8rem', borderRadius: '8px', border: '2px solid', borderColor: yaSeleccionado ? '#4f46e5' : '#ddd', background: yaSeleccionado ? '#e8eaf6' : 'white', cursor: yaSeleccionado || resultado ? 'default' : 'pointer', opacity: yaSeleccionado ? 0.5 : 1 }}>
+                style={{ padding: '16px', fontSize: '1.8rem', borderRadius: '8px', border: '2px solid', borderColor: yaSeleccionado ? '#4f46e5' : '#ddd', background: yaSeleccionado ? '#e8eaf6' : 'white', cursor: yaSeleccionado || resultado ? 'default' : 'pointer', opacity: yaSeleccionado ? 0.5 : 1, color: '#333' }}>
                 {op}
               </button>
             );
