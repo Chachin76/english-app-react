@@ -113,11 +113,11 @@ function MiCamino({ idioma = 'ingles' }) {
         Volver
       </button>
       <h3>Leccion {leccionData.leccion}: {leccionData.tema}</h3>
-{idioma === 'japones' && leccionData.leccion <= 5 && <EscrituraJapones />}
-{idioma === 'japones' && leccionData.leccion >= 6 && leccionData.leccion <= 10 && <EscrituraKatakana />}
       <div style={{ background: '#f0f4ff', padding: '16px', borderRadius: '12px', marginBottom: '16px' }}>
         <p style={{ color: '#333', lineHeight: '1.6' }}>{leccionData.explicacion}</p>
       </div>
+{idioma === 'japones' && leccionData.leccion <= 5 && <EscrituraJapones />}
+{idioma === 'japones' && leccionData.leccion >= 6 && leccionData.leccion <= 10 && <EscrituraKatakana />}
       <h4>Vocabulario clave:</h4>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '16px' }}>
         {leccionData.vocabulario && leccionData.vocabulario.map(function(v, i) {
