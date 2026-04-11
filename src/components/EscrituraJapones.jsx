@@ -89,10 +89,68 @@ const GRUPOS = [
   { nombre: 'Serie W y N', chars: HIRAGANA_W },
 ];
 
+const PALABRAS_PRACTICA = [
+  { español: 'agua', chars: ['み', 'ず'], incorrectos: ['か', 'の', 'て', 'は'] },
+  { español: 'gato', chars: ['ね', 'こ'], incorrectos: ['い', 'ぬ', 'さ', 'り'] },
+  { español: 'sol', chars: ['た', 'い', 'よ', 'う'], incorrectos: ['か', 'の', 'て', 'は'] },
+  { español: 'libro', chars: ['ほ', 'ん'], incorrectos: ['み', 'ず', 'ね', 'こ'] },
+  { español: 'flores', chars: ['は', 'な'], incorrectos: ['い', 'ぬ', 'さ', 'り'] },
+  { español: 'luna', chars: ['つ', 'き'], incorrectos: ['か', 'の', 'て', 'は'] },
+  { español: 'montaña', chars: ['や', 'ま'], incorrectos: ['み', 'ず', 'ね', 'こ'] },
+  { español: 'cielo', chars: ['そ', 'ら'], incorrectos: ['い', 'ぬ', 'さ', 'り'] },
+];
 function EscrituraJapones() {
   const [grupoActivo, setGrupoActivo] = useState(0);
   const [mostrarEjemplo, setMostrarEjemplo] = useState({});
+const [modoPractica, setModoPractica] = useState(false);
+const [palabraActual, setPalabraActual] = useState(0);
+const [seleccionados, setSeleccionados] = useState([]);
+const [resultado, setResultado] = useState(null);
+const [opciones, setOpciones] = useState([]);
 
+function iniciarPractica() {
+  setModoPractica(true);
+  setPalabraActual(0);
+  setSeleccionados([]);
+  setResultado(null);
+  generarOpciones(0);
+}
+
+function generarOpciones(indice) {
+  const palabra = PALABRAS_PRACTICA[indice];
+  const todas = [...palabra.chars, ...palabra.incorrectos];
+  const mezcladas = todas.sort(() => Math.random() - 0.5).slice(0, 6);
+  setOpciones(mezcladas);
+  setSeleccionados([]);
+  setResultado(null);
+}
+
+function seleccionarChar(char) {
+  if (resultado) return;
+  const nuevos = [...seleccionados, char];
+  setSeleccionados(nuevos);
+  const palabra = PALABRAS_PRACTICA[palabraActual];
+  if (nuevos.length === palabra.chars.length) {
+    const correcto = nuevos.join('') === palabra.chars.join('');
+    setResultado(correcto ? 'correcto' : 'incorrecto');
+  }
+}
+
+function siguientePalabra() {
+  const siguiente = palabraActual + 1;
+  if (siguiente < PALABRAS_PRACTICA.length) {
+    setPalabraActual(siguiente);
+    generarOpciones(siguiente);
+  } else {
+    setModoPractica(false);
+    setPalabraActual(0);
+  }
+}
+
+function borrarUltimo() {
+  setSeleccionados(prev => prev.slice(0, -1));
+  setResultado(null);
+}
   function hablar(texto) {
     if (!window.speechSynthesis) return;
     window.speechSynthesis.cancel();
@@ -108,6 +166,57 @@ function EscrituraJapones() {
 
   const grupo = GRUPOS[grupoActivo];
 
+if (modoPractica) {
+  const palabra = PALABRAS_PRACTICA[palabraActual];
+  return (
+    <div>
+      <button onClick={() => setModoPractica(false)} style={{ marginBottom: '16px', background: '#e8eaf6', border: 'none', borderRadius: '8px', padding: '8px 16px', cursor: 'pointer' }}>
+        Volver al alfabeto
+      </button>
+      <h4 style={{ color: '#4f46e5' }}>Practica de escritura {palabraActual + 1}/{PALABRAS_PRACTICA.length}</h4>
+      <div style={{ background: '#f0f4ff', padding: '20px', borderRadius: '12px', textAlign: 'center', marginBottom: '16px' }}>
+        <p style={{ fontSize: '0.9rem', color: '#666', margin: '0 0 8px 0' }}>Escribi en Hiragana:</p>
+        <p style={{ fontSize: '2rem', fontWeight: '600', color: '#333', margin: 0 }}>{palabra.español}</p>
+      </div>
+      <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', marginBottom: '16px', minHeight: '60px', background: '#fff', border: '2px solid', borderColor: resultado === 'correcto' ? '#22c55e' : resultado === 'incorrecto' ? '#ef4444' : '#ddd', borderRadius: '12px', padding: '8px', alignItems: 'center' }}>
+        {seleccionados.length === 0 
+          ? <span style={{ color: '#999' }}>Selecciona los caracteres...</span>
+          : seleccionados.map(function(c, i) {
+              return <span key={i} style={{ fontSize: '2rem', color: '#4f46e5' }}>{c}</span>;
+            })
+        }
+      </div>
+      {resultado && (
+        <div style={{ textAlign: 'center', marginBottom: '16px', padding: '12px', background: resultado === 'correcto' ? '#f0fdf4' : '#fef2f2', borderRadius: '12px' }}>
+          <p style={{ color: resultado === 'correcto' ? '#166534' : '#991b1b', fontWeight: '600', margin: 0 }}>
+            {resultado === 'correcto' ? '✅ Correcto! ' + palabra.chars.join('') + ' = ' + palabra.español : '❌ Incorrecto. La respuesta es: ' + palabra.chars.join('')}
+          </p>
+        </div>
+      )}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginBottom: '12px' }}>
+        {opciones.map(function(op, i) {
+          var yaSeleccionado = seleccionados.includes(op);
+          return (
+            <button key={i} onClick={() => seleccionarChar(op)} disabled={yaSeleccionado || resultado}
+              style={{ padding: '16px', fontSize: '1.8rem', borderRadius: '8px', border: '2px solid', borderColor: yaSeleccionado ? '#4f46e5' : '#ddd', background: yaSeleccionado ? '#e8eaf6' : 'white', cursor: yaSeleccionado || resultado ? 'default' : 'pointer', opacity: yaSeleccionado ? 0.5 : 1 }}>
+              {op}
+            </button>
+          );
+        })}
+      </div>
+      <div style={{ display: 'flex', gap: '8px' }}>
+        <button onClick={borrarUltimo} disabled={seleccionados.length === 0 || resultado} style={{ flex: 1, padding: '12px', background: '#fee2e2', color: '#991b1b', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600' }}>
+          Borrar ultimo
+        </button>
+        {resultado && (
+          <button onClick={siguientePalabra} style={{ flex: 1, padding: '12px', background: '#4f46e5', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600' }}>
+            {palabraActual < PALABRAS_PRACTICA.length - 1 ? 'Siguiente palabra' : 'Terminar practica'}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
   return (
     <div>
       <div style={{ background: '#f0f4ff', padding: '16px', borderRadius: '12px', marginBottom: '16px' }}>
@@ -116,6 +225,9 @@ function EscrituraJapones() {
         </p>
       </div>
 
+<button onClick={iniciarPractica} style={{ width: '100%', padding: '12px', background: '#22c55e', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', marginBottom: '16px' }}>
+  Practicar escritura
+</button>
       <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', flexWrap: 'wrap' }}>
         {GRUPOS.map(function(g, i) {
           return (
