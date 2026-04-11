@@ -1,90 +1,91 @@
-import { useState } from 'react';
+# -*- coding: utf-8 -*-
+content = '''import { useState } from 'react';
 
 const PALABRAS_PRACTICA = [
-  { espanol: 'agua', chars: ['み', 'ず'], incorrectos: ['か', 'の', 'て', 'は'] },
-  { espanol: 'gato', chars: ['ね', 'こ'], incorrectos: ['い', 'ぬ', 'さ', 'り'] },
-  { espanol: 'sol', chars: ['た', 'い', 'よ', 'う'], incorrectos: ['か', 'の', 'て', 'は'] },
-  { espanol: 'libro', chars: ['ほ', 'ん'], incorrectos: ['み', 'ず', 'ね', 'こ'] },
-  { espanol: 'flores', chars: ['は', 'な'], incorrectos: ['い', 'ぬ', 'さ', 'り'] },
-  { espanol: 'luna', chars: ['つ', 'き'], incorrectos: ['か', 'の', 'て', 'は'] },
-  { espanol: 'montana', chars: ['や', 'ま'], incorrectos: ['み', 'ず', 'ね', 'こ'] },
-  { espanol: 'cielo', chars: ['そ', 'ら'], incorrectos: ['い', 'ぬ', 'さ', 'り'] },
+  { espanol: 'agua', chars: ['\u307f', '\u305a'], incorrectos: ['\u304b', '\u306e', '\u3066', '\u306f'] },
+  { espanol: 'gato', chars: ['\u306d', '\u3053'], incorrectos: ['\u3044', '\u306c', '\u3055', '\u308a'] },
+  { espanol: 'sol', chars: ['\u305f', '\u3044', '\u3088', '\u3046'], incorrectos: ['\u304b', '\u306e', '\u3066', '\u306f'] },
+  { espanol: 'libro', chars: ['\u307b', '\u3093'], incorrectos: ['\u307f', '\u305a', '\u306d', '\u3053'] },
+  { espanol: 'flores', chars: ['\u306f', '\u306a'], incorrectos: ['\u3044', '\u306c', '\u3055', '\u308a'] },
+  { espanol: 'luna', chars: ['\u3064', '\u304d'], incorrectos: ['\u304b', '\u306e', '\u3066', '\u306f'] },
+  { espanol: 'montana', chars: ['\u3084', '\u307e'], incorrectos: ['\u307f', '\u305a', '\u306d', '\u3053'] },
+  { espanol: 'cielo', chars: ['\u305d', '\u3089'], incorrectos: ['\u3044', '\u306c', '\u3055', '\u308a'] },
 ];
 
 const HIRAGANA_VOCALES = [
-  { char: 'あ', romaji: 'a', fonetica: 'a como en espanol', ejemplo: 'あめ', ejemplo_sig: 'ame = lluvia' },
-  { char: 'い', romaji: 'i', fonetica: 'i como en espanol', ejemplo: 'いぬ', ejemplo_sig: 'inu = perro' },
-  { char: 'う', romaji: 'u', fonetica: 'u suave', ejemplo: 'うみ', ejemplo_sig: 'umi = mar' },
-  { char: 'え', romaji: 'e', fonetica: 'e como en espanol', ejemplo: 'えき', ejemplo_sig: 'eki = estacion' },
-  { char: 'お', romaji: 'o', fonetica: 'o como en espanol', ejemplo: 'おかあさん', ejemplo_sig: 'okaasan = madre' },
+  { char: '\u3042', romaji: 'a', fonetica: 'a como en espanol', ejemplo: '\u3042\u3081', ejemplo_sig: 'ame = lluvia' },
+  { char: '\u3044', romaji: 'i', fonetica: 'i como en espanol', ejemplo: '\u3044\u306c', ejemplo_sig: 'inu = perro' },
+  { char: '\u3046', romaji: 'u', fonetica: 'u suave', ejemplo: '\u3046\u307f', ejemplo_sig: 'umi = mar' },
+  { char: '\u3048', romaji: 'e', fonetica: 'e como en espanol', ejemplo: '\u3048\u304d', ejemplo_sig: 'eki = estacion' },
+  { char: '\u304a', romaji: 'o', fonetica: 'o como en espanol', ejemplo: '\u304a\u304b\u3042\u3055\u3093', ejemplo_sig: 'okaasan = madre' },
 ];
 
 const HIRAGANA_K = [
-  { char: 'か', romaji: 'ka', fonetica: 'ka', ejemplo: 'かさ', ejemplo_sig: 'kasa = paraguas' },
-  { char: 'き', romaji: 'ki', fonetica: 'ki', ejemplo: 'きって', ejemplo_sig: 'kitte = sello' },
-  { char: 'く', romaji: 'ku', fonetica: 'ku', ejemplo: 'くも', ejemplo_sig: 'kumo = nube' },
-  { char: 'け', romaji: 'ke', fonetica: 'ke', ejemplo: 'けむり', ejemplo_sig: 'kemuri = humo' },
-  { char: 'こ', romaji: 'ko', fonetica: 'ko', ejemplo: 'こども', ejemplo_sig: 'kodomo = nino' },
+  { char: '\u304b', romaji: 'ka', fonetica: 'ka', ejemplo: '\u304b\u3055', ejemplo_sig: 'kasa = paraguas' },
+  { char: '\u304d', romaji: 'ki', fonetica: 'ki', ejemplo: '\u304d\u3063\u3066', ejemplo_sig: 'kitte = sello' },
+  { char: '\u304f', romaji: 'ku', fonetica: 'ku', ejemplo: '\u304f\u3082', ejemplo_sig: 'kumo = nube' },
+  { char: '\u3051', romaji: 'ke', fonetica: 'ke', ejemplo: '\u3051\u3080\u308a', ejemplo_sig: 'kemuri = humo' },
+  { char: '\u3053', romaji: 'ko', fonetica: 'ko', ejemplo: '\u3053\u3069\u3082', ejemplo_sig: 'kodomo = nino' },
 ];
 
 const HIRAGANA_S = [
-  { char: 'さ', romaji: 'sa', fonetica: 'sa', ejemplo: 'さかな', ejemplo_sig: 'sakana = pez' },
-  { char: 'し', romaji: 'shi', fonetica: 'shi no si', ejemplo: 'しろ', ejemplo_sig: 'shiro = blanco' },
-  { char: 'す', romaji: 'su', fonetica: 'su', ejemplo: 'すし', ejemplo_sig: 'sushi' },
-  { char: 'せ', romaji: 'se', fonetica: 'se', ejemplo: 'せんせい', ejemplo_sig: 'sensei = profesor' },
-  { char: 'そ', romaji: 'so', fonetica: 'so', ejemplo: 'そら', ejemplo_sig: 'sora = cielo' },
+  { char: '\u3055', romaji: 'sa', fonetica: 'sa', ejemplo: '\u3055\u304b\u306a', ejemplo_sig: 'sakana = pez' },
+  { char: '\u3057', romaji: 'shi', fonetica: 'shi no si', ejemplo: '\u3057\u308d', ejemplo_sig: 'shiro = blanco' },
+  { char: '\u3059', romaji: 'su', fonetica: 'su', ejemplo: '\u3059\u3057', ejemplo_sig: 'sushi' },
+  { char: '\u305b', romaji: 'se', fonetica: 'se', ejemplo: '\u305b\u3093\u305b\u3044', ejemplo_sig: 'sensei = profesor' },
+  { char: '\u305d', romaji: 'so', fonetica: 'so', ejemplo: '\u305d\u3089', ejemplo_sig: 'sora = cielo' },
 ];
 
 const HIRAGANA_T = [
-  { char: 'た', romaji: 'ta', fonetica: 'ta', ejemplo: 'たまご', ejemplo_sig: 'tamago = huevo' },
-  { char: 'ち', romaji: 'chi', fonetica: 'chi no ti', ejemplo: 'ちず', ejemplo_sig: 'chizu = mapa' },
-  { char: 'つ', romaji: 'tsu', fonetica: 'tsu', ejemplo: 'つき', ejemplo_sig: 'tsuki = luna' },
-  { char: 'て', romaji: 'te', fonetica: 'te', ejemplo: 'てがみ', ejemplo_sig: 'tegami = carta' },
-  { char: 'と', romaji: 'to', fonetica: 'to', ejemplo: 'とり', ejemplo_sig: 'tori = pajaro' },
+  { char: '\u305f', romaji: 'ta', fonetica: 'ta', ejemplo: '\u305f\u307e\u3054', ejemplo_sig: 'tamago = huevo' },
+  { char: '\u3061', romaji: 'chi', fonetica: 'chi no ti', ejemplo: '\u3061\u305a', ejemplo_sig: 'chizu = mapa' },
+  { char: '\u3064', romaji: 'tsu', fonetica: 'tsu', ejemplo: '\u3064\u304d', ejemplo_sig: 'tsuki = luna' },
+  { char: '\u3066', romaji: 'te', fonetica: 'te', ejemplo: '\u3066\u304c\u307f', ejemplo_sig: 'tegami = carta' },
+  { char: '\u3068', romaji: 'to', fonetica: 'to', ejemplo: '\u3068\u308a', ejemplo_sig: 'tori = pajaro' },
 ];
 
 const HIRAGANA_N = [
-  { char: 'な', romaji: 'na', fonetica: 'na', ejemplo: 'なまえ', ejemplo_sig: 'namae = nombre' },
-  { char: 'に', romaji: 'ni', fonetica: 'ni', ejemplo: 'にく', ejemplo_sig: 'niku = carne' },
-  { char: 'ぬ', romaji: 'nu', fonetica: 'nu', ejemplo: 'ぬの', ejemplo_sig: 'nuno = tela' },
-  { char: 'ね', romaji: 'ne', fonetica: 'ne', ejemplo: 'ねこ', ejemplo_sig: 'neko = gato' },
-  { char: 'の', romaji: 'no', fonetica: 'no', ejemplo: 'のり', ejemplo_sig: 'nori = alga' },
+  { char: '\u306a', romaji: 'na', fonetica: 'na', ejemplo: '\u306a\u307e\u3048', ejemplo_sig: 'namae = nombre' },
+  { char: '\u306b', romaji: 'ni', fonetica: 'ni', ejemplo: '\u306b\u304f', ejemplo_sig: 'niku = carne' },
+  { char: '\u306c', romaji: 'nu', fonetica: 'nu', ejemplo: '\u306c\u306e', ejemplo_sig: 'nuno = tela' },
+  { char: '\u306d', romaji: 'ne', fonetica: 'ne', ejemplo: '\u306d\u3053', ejemplo_sig: 'neko = gato' },
+  { char: '\u306e', romaji: 'no', fonetica: 'no', ejemplo: '\u306e\u308a', ejemplo_sig: 'nori = alga' },
 ];
 
 const HIRAGANA_H = [
-  { char: 'は', romaji: 'ha', fonetica: 'ha', ejemplo: 'はな', ejemplo_sig: 'hana = flor' },
-  { char: 'ひ', romaji: 'hi', fonetica: 'hi', ejemplo: 'ひと', ejemplo_sig: 'hito = persona' },
-  { char: 'ふ', romaji: 'fu', fonetica: 'fu no hu', ejemplo: 'ふじ', ejemplo_sig: 'fuji = Monte Fuji' },
-  { char: 'へ', romaji: 'he', fonetica: 'he', ejemplo: 'へや', ejemplo_sig: 'heya = habitacion' },
-  { char: 'ほ', romaji: 'ho', fonetica: 'ho', ejemplo: 'ほん', ejemplo_sig: 'hon = libro' },
+  { char: '\u306f', romaji: 'ha', fonetica: 'ha', ejemplo: '\u306f\u306a', ejemplo_sig: 'hana = flor' },
+  { char: '\u3072', romaji: 'hi', fonetica: 'hi', ejemplo: '\u3072\u3068', ejemplo_sig: 'hito = persona' },
+  { char: '\u3075', romaji: 'fu', fonetica: 'fu no hu', ejemplo: '\u3075\u3058', ejemplo_sig: 'fuji = Monte Fuji' },
+  { char: '\u3078', romaji: 'he', fonetica: 'he', ejemplo: '\u3078\u3084', ejemplo_sig: 'heya = habitacion' },
+  { char: '\u307b', romaji: 'ho', fonetica: 'ho', ejemplo: '\u307b\u3093', ejemplo_sig: 'hon = libro' },
 ];
 
 const HIRAGANA_M = [
-  { char: 'ま', romaji: 'ma', fonetica: 'ma', ejemplo: 'まち', ejemplo_sig: 'machi = ciudad' },
-  { char: 'み', romaji: 'mi', fonetica: 'mi', ejemplo: 'みず', ejemplo_sig: 'mizu = agua' },
-  { char: 'む', romaji: 'mu', fonetica: 'mu', ejemplo: 'むし', ejemplo_sig: 'mushi = insecto' },
-  { char: 'め', romaji: 'me', fonetica: 'me', ejemplo: 'めがね', ejemplo_sig: 'megane = anteojos' },
-  { char: 'も', romaji: 'mo', fonetica: 'mo', ejemplo: 'もり', ejemplo_sig: 'mori = bosque' },
+  { char: '\u307e', romaji: 'ma', fonetica: 'ma', ejemplo: '\u307e\u3061', ejemplo_sig: 'machi = ciudad' },
+  { char: '\u307f', romaji: 'mi', fonetica: 'mi', ejemplo: '\u307f\u305a', ejemplo_sig: 'mizu = agua' },
+  { char: '\u3080', romaji: 'mu', fonetica: 'mu', ejemplo: '\u3080\u3057', ejemplo_sig: 'mushi = insecto' },
+  { char: '\u3081', romaji: 'me', fonetica: 'me', ejemplo: '\u3081\u304c\u306d', ejemplo_sig: 'megane = anteojos' },
+  { char: '\u3082', romaji: 'mo', fonetica: 'mo', ejemplo: '\u3082\u308a', ejemplo_sig: 'mori = bosque' },
 ];
 
 const HIRAGANA_Y = [
-  { char: 'や', romaji: 'ya', fonetica: 'ya', ejemplo: 'やま', ejemplo_sig: 'yama = montana' },
-  { char: 'ゆ', romaji: 'yu', fonetica: 'yu', ejemplo: 'ゆき', ejemplo_sig: 'yuki = nieve' },
-  { char: 'よ', romaji: 'yo', fonetica: 'yo', ejemplo: 'よる', ejemplo_sig: 'yoru = noche' },
+  { char: '\u3084', romaji: 'ya', fonetica: 'ya', ejemplo: '\u3084\u307e', ejemplo_sig: 'yama = montana' },
+  { char: '\u3086', romaji: 'yu', fonetica: 'yu', ejemplo: '\u3086\u304d', ejemplo_sig: 'yuki = nieve' },
+  { char: '\u3088', romaji: 'yo', fonetica: 'yo', ejemplo: '\u3088\u308b', ejemplo_sig: 'yoru = noche' },
 ];
 
 const HIRAGANA_R = [
-  { char: 'ら', romaji: 'ra', fonetica: 'ra suave entre r y l', ejemplo: 'らじお', ejemplo_sig: 'rajio = radio' },
-  { char: 'り', romaji: 'ri', fonetica: 'ri', ejemplo: 'りんご', ejemplo_sig: 'ringo = manzana' },
-  { char: 'る', romaji: 'ru', fonetica: 'ru', ejemplo: 'るす', ejemplo_sig: 'rusu = ausente' },
-  { char: 'れ', romaji: 're', fonetica: 're', ejemplo: 'れんあい', ejemplo_sig: 'renai = amor' },
-  { char: 'ろ', romaji: 'ro', fonetica: 'ro', ejemplo: 'ろうか', ejemplo_sig: 'rouka = pasillo' },
+  { char: '\u3089', romaji: 'ra', fonetica: 'ra suave entre r y l', ejemplo: '\u3089\u3058\u304a', ejemplo_sig: 'rajio = radio' },
+  { char: '\u308a', romaji: 'ri', fonetica: 'ri', ejemplo: '\u308a\u3093\u3054', ejemplo_sig: 'ringo = manzana' },
+  { char: '\u308b', romaji: 'ru', fonetica: 'ru', ejemplo: '\u308b\u3059', ejemplo_sig: 'rusu = ausente' },
+  { char: '\u308c', romaji: 're', fonetica: 're', ejemplo: '\u308c\u3093\u3042\u3044', ejemplo_sig: 'renai = amor' },
+  { char: '\u308d', romaji: 'ro', fonetica: 'ro', ejemplo: '\u308d\u3046\u304b', ejemplo_sig: 'rouka = pasillo' },
 ];
 
 const HIRAGANA_W = [
-  { char: 'わ', romaji: 'wa', fonetica: 'wa', ejemplo: 'わたし', ejemplo_sig: 'watashi = yo' },
-  { char: 'を', romaji: 'wo', fonetica: 'o particula de objeto', ejemplo: 'ほんをよむ', ejemplo_sig: 'hon wo yomu = leer un libro' },
-  { char: 'ん', romaji: 'n', fonetica: 'n nasal al final de silaba', ejemplo: 'にほん', ejemplo_sig: 'nihon = Japon' },
+  { char: '\u308f', romaji: 'wa', fonetica: 'wa', ejemplo: '\u308f\u305f\u3057', ejemplo_sig: 'watashi = yo' },
+  { char: '\u3092', romaji: 'wo', fonetica: 'o particula de objeto', ejemplo: '\u307b\u3093\u3092\u3088\u3080', ejemplo_sig: 'hon wo yomu = leer un libro' },
+  { char: '\u3093', romaji: 'n', fonetica: 'n nasal al final de silaba', ejemplo: '\u306b\u307b\u3093', ejemplo_sig: 'nihon = Japon' },
 ];
 
 const GRUPOS = [
@@ -289,3 +290,8 @@ function EscrituraJapones() {
 }
 
 export default EscrituraJapones;
+'''
+
+with open('src/components/EscrituraJapones.jsx', 'w', encoding='utf-8') as f:
+    f.write(content)
+print('Archivo creado correctamente')
