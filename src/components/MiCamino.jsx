@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import EscrituraJapones from './EscrituraJapones';
 import EscrituraKatakana from './EscrituraKatakana';
+import LeccionModulos from './LeccionModulos';
 
 const NIVELES = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
@@ -162,6 +163,14 @@ function MiCamino({ idioma = 'ingles' }) {
           }
         </div>
       )}
+{!leccionCompletada && (
+  <LeccionModulos
+    idioma={idioma}
+    nivel={nivelActivo}
+    tema={leccionData.tema}
+    onVolver={() => {}}
+  />
+)}
       {leccionCompletada && (
         <div style={{ textAlign: 'center', padding: '24px', background: '#f0fdf4', borderRadius: '12px' }}>
           <div style={{ fontSize: '3rem' }}>🎉</div>
