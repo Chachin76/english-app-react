@@ -18,9 +18,11 @@ function LeccionModulos({ idioma, nivel, tema, onVolver }) {
   const bottomRef = useRef(null);
 useEffect(() => {
   if (bottomRef.current) {
-    bottomRef.current.scrollIntoView({ behavior: 'smooth' });
+    bottomRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }
-}, [mensajesChat]);
+}, [mensajesChat, cargando]);
+
+[mensajesChat]);
 
   const BACKEND = 'https://english-app-backend-ifyj.onrender.com';
 
@@ -65,16 +67,21 @@ useEffect(() => {
       setCargando(false);
     }
   }
-
-  function hablar(texto) {
-    if (!window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
+function hablar(texto) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  setTimeout(() => {
     const VOCES = { ingles: 'en-US', frances: 'fr-FR', portugues: 'pt-BR', italiano: 'it-IT', aleman: 'de-DE', espanol: 'es-ES', chino: 'zh-CN', japones: 'ja-JP', coreano: 'ko-KR' };
     const u = new SpeechSynthesisUtterance(texto);
     u.lang = VOCES[idioma] || 'en-US';
     u.rate = 0.9;
+    const voces = window.speechSynthesis.getVoices();
+    const voz = voces.find(v => v.lang === (VOCES[idioma] || 'en-US')) || voces[0];
+    if (voz) u.voice = voz;
     window.speechSynthesis.speak(u);
-  }
+  }, 300);
+}
+  
 
 function iniciarMicrofono() {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
