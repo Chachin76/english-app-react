@@ -1,0 +1,5 @@
+f = open('src/components/LeccionModulos.jsx', encoding='utf-8')
+c = f.read()
+f.close()
+idx = c.find('MODULOS')
+print(c[idx:idx+300])
