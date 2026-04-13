@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 function LeccionModulos({ idioma, nivel, tema, onVolver }) {
   const [moduloActivo, setModuloActivo] = useState(null);
@@ -15,6 +15,12 @@ function LeccionModulos({ idioma, nivel, tema, onVolver }) {
   const [lecturaResultado, setLecturaResultado] = useState(null);
   const [escuchando, setEscuchando] = useState(false);
   const recognitionRef = useState(null);
+  const bottomRef = useRef(null);
+useEffect(() => {
+  if (bottomRef.current) {
+    bottomRef.current.scrollIntoView({ behavior: 'smooth' });
+  }
+}, [mensajesChat]);
 
   const BACKEND = 'https://english-app-backend-ifyj.onrender.com';
 
@@ -299,6 +305,7 @@ async function enviarChatDirecto(texto) {
         );
       })}
       {cargando && <p style={{ color: '#999', fontSize: '0.9rem' }}>...</p>}
+    <div ref={bottomRef} />
     </div>
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
       <div style={{ display: 'flex', gap: '8px' }}>
