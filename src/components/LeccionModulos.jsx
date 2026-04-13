@@ -243,36 +243,49 @@ function detenerMicrofono() {
       )}
 
       {moduloActivo === 'conversacion' && (
-        <div>
-          <h4 style={{ color: '#4f46e5' }}>Conversacion - {tema}</h4>
-          {datos && datos.frases_utiles && (
-            <div style={{ background: '#fff8e1', padding: '12px', borderRadius: '8px', marginBottom: '12px' }}>
-              <p style={{ fontWeight: '600', color: '#333', margin: '0 0 8px 0' }}>Frases utiles:</p>
-              {datos.frases_utiles.map(function(f, i) {
-                return <p key={i} style={{ color: '#666', margin: '4px 0', fontSize: '0.9rem' }}>{f.frase} = {f.traduccion}</p>;
-              })}
-            </div>
-          )}
-          <div style={{ background: '#f5f5f5', borderRadius: '8px', padding: '12px', minHeight: '150px', marginBottom: '8px' }}>
-            {mensajesChat.map(function(m, i) {
-              return (
-                <div key={i} style={{ marginBottom: '8px', textAlign: m.rol === 'usuario' ? 'right' : 'left' }}>
-                  <span style={{ background: m.rol === 'usuario' ? '#4f46e5' : 'white', color: m.rol === 'usuario' ? 'white' : '#333', padding: '8px 12px', borderRadius: '8px', display: 'inline-block', maxWidth: '80%' }}>
-                    {m.texto}
-                  </span>
-                </div>
-              );
-            })}
+  <div>
+    <h4 style={{ color: '#4f46e5' }}>Conversacion - {tema}</h4>
+    {datos && datos.frases_utiles && (
+      <div style={{ background: '#fff8e1', padding: '12px', borderRadius: '8px', marginBottom: '12px' }}>
+        <p style={{ fontWeight: '600', color: '#333', margin: '0 0 8px 0' }}>Frases utiles:</p>
+        {datos.frases_utiles.map(function(f, i) {
+          return <p key={i} style={{ color: '#666', margin: '4px 0', fontSize: '0.9rem' }}>{f.frase} = {f.traduccion}</p>;
+        })}
+      </div>
+    )}
+    <div style={{ background: '#f5f5f5', borderRadius: '8px', padding: '12px', minHeight: '200px', marginBottom: '8px', maxHeight: '300px', overflowY: 'auto' }}>
+      {mensajesChat.map(function(m, i) {
+        return (
+          <div key={i} style={{ marginBottom: '8px', textAlign: m.rol === 'usuario' ? 'right' : 'left' }}>
+            <span style={{ background: m.rol === 'usuario' ? '#4f46e5' : 'white', color: m.rol === 'usuario' ? 'white' : '#333', padding: '8px 12px', borderRadius: '8px', display: 'inline-block', maxWidth: '80%', fontSize: '0.95rem' }}>
+              {m.texto}
+            </span>
+            {m.rol === 'tutor' && (
+              <button onClick={() => hablar(m.texto)} style={{ background: 'transparent', border: 'none', cursor: 'pointer', marginLeft: '4px' }}>🔊</button>
+            )}
           </div>
-          <div style={{ display: 'flex', gap: '8px' }}>
-            <input value={inputChat} onChange={e => setInputChat(e.target.value)} onKeyDown={e => e.key === 'Enter' && enviarChat()} placeholder="Escribi tu mensaje..." style={{ flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid #ddd' }} />
-            <button onClick={escuchando ? detenerMicrofono : iniciarMicrofono} style={{ padding: '10px', background: escuchando ? '#fee2e2' : '#e8f0fe', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>
-  {escuchando ? 'stop' : 'mic'}
-</button>
-<button onClick={enviarChat} style={{ padding: '10px 16px', background: '#4f46e5', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>Enviar</button>
-          </div>
-        </div>
-      )}
+        );
+      })}
+      {cargando && <p style={{ color: '#999', fontSize: '0.9rem' }}>...</p>}
+    </div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+      <div style={{ display: 'flex', gap: '8px' }}>
+        <input value={inputChat} onChange={e => setInputChat(e.target.value)} onKeyDown={e => e.key === 'Enter' && enviarChat()} placeholder="Escribi o usa el microfono..." style={{ flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid #ddd', color: '#333' }} />
+        <button onClick={enviarChat} disabled={cargando || !inputChat.trim()} style={{ padding: '10px 16px', background: '#4f46e5', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600' }}>
+          Enviar
+        </button>
+      </div>
+      <button
+        onClick={escuchando ? detenerMicrofono : iniciarMicrofono}
+        style={{ width: '100%', padding: '14px', background: escuchando ? '#fee2e2' : '#e8f0fe', border: '2px solid', borderColor: escuchando ? '#ef4444' : '#4f46e5', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', color: escuchando ? '#991b1b' : '#1a237e', fontSize: '1rem' }}>
+        {escuchando ? '⏹ Detener microfono' : '🎤 Hablar'}
+      </button>
+      <button onClick={() => { setModuloActivo(null); setMensajesChat([]); }} style={{ width: '100%', padding: '10px', background: '#f0fdf4', border: '1px solid #22c55e', borderRadius: '8px', cursor: 'pointer', color: '#166534', fontWeight: '600' }}>
+        Terminar conversacion
+      </button>
+    </div>
+  </div>
+)}
 
       {moduloActivo === 'situacion' && datos && (
         <div>
