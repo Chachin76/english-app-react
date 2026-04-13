@@ -76,11 +76,24 @@ function iniciarMicrofono() {
   const VOCES = { ingles: 'en-US', frances: 'fr-FR', portugues: 'pt-BR', italiano: 'it-IT', aleman: 'de-DE', espanol: 'es-ES', chino: 'zh-CN', japones: 'ja-JP', coreano: 'ko-KR' };
   const r = new SR();
   r.lang = VOCES[idioma] || 'en-US';
-  r.interimResults = true;
-  r.continuous = true;
+  r.interimResults = false;
+  r.continuous = false;
   r.onstart = () => setEscuchando(true);
-  r.onend = () => setEscuchando(false);
-  r.onresult = (e) => { setInputChat(Array.from(e.results).map(x => x[0].transcript).join('')); };
+  r.onend = () => {
+    setEscuchando(false);
+  };
+  r.onresult = (e) => {
+    const texto = Array.from(e.results).map(x => x[0].transcript).join('');
+    setInputChat(texto);
+    setTimeout(() => {
+      setInputChat(prev => {
+        if (prev.trim()) {
+          enviarChatDirecto(prev);
+        }
+        return '';
+      });
+    }, 100);
+  };
   r.onerror = () => setEscuchando(false);
   recognitionRef[0] = r;
   r.start();
@@ -124,6 +137,25 @@ function detenerMicrofono() {
     } catch(e) { console.error(e); }
     finally { setCargando(false); }
   }
+async function enviarChatDirecto(texto) {
+  if (!texto.trim()) return;
+  const nuevos = [...mensajesChat, { rol: 'usuario', texto }];
+  setMensajesChat(nuevos);
+  setInputChat('');
+  setCargando(true);
+  try {
+    const historial = nuevos.map(m => ({ role: m.rol === 'usuario' ? 'user' : 'assistant', content: m.texto }));
+    const resp = await fetch(BACKEND + '/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ historial, idioma })
+    });
+    const d = await resp.json();
+    setMensajesChat(prev => [...prev, { rol: 'tutor', texto: d.respuesta }]);
+    hablar(d.respuesta);
+  } catch(e) { console.error(e); }
+  finally { setCargando(false); }
+}
 
   function verificarDictado() {
     if (!datos || !datos.frases) return;
