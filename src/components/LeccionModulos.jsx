@@ -13,6 +13,8 @@ function LeccionModulos({ idioma, nivel, tema, onVolver }) {
   const [resultadoDictado, setResultadoDictado] = useState(null);
   const [lecturaRespuestas, setLecturaRespuestas] = useState({});
   const [lecturaResultado, setLecturaResultado] = useState(null);
+  const [escuchando, setEscuchando] = useState(false);
+  const recognitionRef = useState(null);
 
   const BACKEND = 'https://english-app-backend-ifyj.onrender.com';
 
@@ -68,6 +70,26 @@ function LeccionModulos({ idioma, nivel, tema, onVolver }) {
     window.speechSynthesis.speak(u);
   }
 
+function iniciarMicrofono() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { alert('Usa Chrome para el microfono.'); return; }
+  const VOCES = { ingles: 'en-US', frances: 'fr-FR', portugues: 'pt-BR', italiano: 'it-IT', aleman: 'de-DE', espanol: 'es-ES', chino: 'zh-CN', japones: 'ja-JP', coreano: 'ko-KR' };
+  const r = new SR();
+  r.lang = VOCES[idioma] || 'en-US';
+  r.interimResults = true;
+  r.continuous = true;
+  r.onstart = () => setEscuchando(true);
+  r.onend = () => setEscuchando(false);
+  r.onresult = (e) => { setInputChat(Array.from(e.results).map(x => x[0].transcript).join('')); };
+  r.onerror = () => setEscuchando(false);
+  recognitionRef[0] = r;
+  r.start();
+}
+
+function detenerMicrofono() {
+  if (recognitionRef[0]) recognitionRef[0].stop();
+  setEscuchando(false);
+}
   async function enviarCorrector() {
     if (!inputCorrector.trim()) return;
     setCargando(true);
@@ -244,7 +266,10 @@ function LeccionModulos({ idioma, nivel, tema, onVolver }) {
           </div>
           <div style={{ display: 'flex', gap: '8px' }}>
             <input value={inputChat} onChange={e => setInputChat(e.target.value)} onKeyDown={e => e.key === 'Enter' && enviarChat()} placeholder="Escribi tu mensaje..." style={{ flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid #ddd' }} />
-            <button onClick={enviarChat} style={{ padding: '10px 16px', background: '#4f46e5', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>Enviar</button>
+            <button onClick={escuchando ? detenerMicrofono : iniciarMicrofono} style={{ padding: '10px', background: escuchando ? '#fee2e2' : '#e8f0fe', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>
+  {escuchando ? 'stop' : 'mic'}
+</button>
+<button onClick={enviarChat} style={{ padding: '10px 16px', background: '#4f46e5', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>Enviar</button>
           </div>
         </div>
       )}
