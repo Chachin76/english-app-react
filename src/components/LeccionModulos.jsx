@@ -17,25 +17,23 @@ function LeccionModulos({ idioma, nivel, tema, onVolver }) {
   const recognitionRef = useState(null);
   const bottomRef = useRef(null);
 useEffect(() => {
-  if (bottomRef.current) {
-    bottomRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  if (bottomRef.current && moduloActivo === 'conversacion') {
+    bottomRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
-}, [mensajesChat, cargando]);
-
-[mensajesChat]);
+}, [mensajesChat]);
 
   const BACKEND = 'https://english-app-backend-ifyj.onrender.com';
 
   const MODULOS = [
-    { id: 'corrector', nombre: 'Corrector', emoji: 'Corrector' },
-    { id: 'conversacion', nombre: 'Conversacion', emoji: 'Chat' },
-    { id: 'frases', nombre: 'Frases', emoji: 'Frases' },
-    { id: 'vocabulario', nombre: 'Vocabulario', emoji: 'Vocab' },
-    { id: 'situacion', nombre: 'Situaciones', emoji: 'Situac' },
-    { id: 'dictado', nombre: 'Dictado', emoji: 'Dictado' },
-    { id: 'lectura', nombre: 'Lectura', emoji: 'Lectura' },
-    { id: 'cultura', nombre: 'Cultura', emoji: 'Cultura' },
-  ];
+  { id: 'corrector', nombre: 'Corrector' },
+  { id: 'conversacion', nombre: 'Conversacion' },
+  { id: 'frases', nombre: 'Frases' },
+  { id: 'vocabulario', nombre: 'Vocabulario' },
+  { id: 'situacion', nombre: 'Situaciones' },
+  { id: 'dictado', nombre: 'Dictado' },
+  { id: 'lectura', nombre: 'Lectura' },
+  { id: 'cultura', nombre: 'Cultura' },
+];
 
   async function cargarModulo(modulo) {
     setModuloActivo(modulo);
