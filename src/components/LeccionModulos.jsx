@@ -17,9 +17,9 @@ function LeccionModulos({ idioma, nivel, tema, onVolver }) {
   const recognitionRef = useState(null);
   const bottomRef = useRef(null);
 useEffect(() => {
-  if (bottomRef.current && moduloActivo === 'conversacion' && mensajesChat.length > 0) {
-    const el = bottomRef.current;
-    el.parentElement.scrollTop = el.parentElement.scrollHeight;
+  if (moduloActivo === 'conversacion' && mensajesChat.length > 0) {
+    const chatBox = document.getElementById('chat-box-leccion');
+    if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
   }
 }, [mensajesChat]);
 
@@ -297,7 +297,7 @@ async function enviarChatDirecto(texto) {
         })}
       </div>
     )}
-    <div style={{ background: '#f5f5f5', borderRadius: '8px', padding: '12px', minHeight: '200px', marginBottom: '8px', maxHeight: '300px', overflowY: 'auto' }}>
+    <div id='chat-box-leccion' style={{ background: '#f5f5f5', borderRadius: '8px', padding: '12px', minHeight: '200px', marginBottom: '8px', maxHeight: '300px', overflowY: 'auto' }}>
       {mensajesChat.map(function(m, i) {
         return (
           <div key={i} style={{ marginBottom: '8px', textAlign: m.rol === 'usuario' ? 'right' : 'left' }}>
@@ -387,7 +387,7 @@ async function enviarChatDirecto(texto) {
           <h4 style={{ color: '#4f46e5' }}>{datos.titulo}</h4>
           <div style={{ background: '#f0f4ff', padding: '16px', borderRadius: '8px', marginBottom: '16px' }}>
             <p style={{ color: '#333', lineHeight: '1.6' }}>{datos.texto}</p>
-            <button onClick={() => hablar(datos.texto)} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>🔊 Escuchar</button>
+            <button onClick={() => hablar(datos.texto)} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>Escuchar</button>
           </div>
           {datos.preguntas && !lecturaResultado && datos.preguntas.map(function(p, i) {
             return (
