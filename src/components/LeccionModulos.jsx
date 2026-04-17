@@ -322,7 +322,7 @@ async function enviarChatDirecto(texto) {
       <button
         onClick={escuchando ? detenerMicrofono : iniciarMicrofono}
         style={{ width: '100%', padding: '14px', background: escuchando ? '#fee2e2' : '#e8f0fe', border: '2px solid', borderColor: escuchando ? '#ef4444' : '#4f46e5', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', color: escuchando ? '#991b1b' : '#1a237e', fontSize: '1rem' }}>
-        {escuchando ? '⏹ Detener microfono' : '🎤 Hablar'}
+        {escuchando ? 'Detener microfono' : 'Hablar'}
       </button>
       <button onClick={() => { window.speechSynthesis.cancel(); setModuloActivo(null); setMensajesChat([]); }} style={{ width: '100%', padding: '10px', background: '#f0fdf4', border: '1px solid #22c55e', borderRadius: '8px', cursor: 'pointer', color: '#166534', fontWeight: '600' }}>
         Terminar conversacion
