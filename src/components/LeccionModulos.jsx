@@ -17,8 +17,9 @@ function LeccionModulos({ idioma, nivel, tema, onVolver }) {
   const recognitionRef = useState(null);
   const bottomRef = useRef(null);
 useEffect(() => {
-  if (bottomRef.current && moduloActivo === 'conversacion') {
-    bottomRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  if (bottomRef.current && moduloActivo === 'conversacion' && mensajesChat.length > 0) {
+    const el = bottomRef.current;
+    el.parentElement.scrollTop = el.parentElement.scrollHeight;
   }
 }, [mensajesChat]);
 
@@ -234,7 +235,7 @@ async function enviarChatDirecto(texto) {
             return (
               <div key={i} style={{ background: '#f0f4ff', padding: '10px', borderRadius: '8px', marginBottom: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ color: '#333' }}>{o.traduccion}</span>
-                <button onClick={() => hablar(o.oracion)} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>🔊</button>
+                <button onClick={() => hablar(o.oracion)} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>Escuchar</button>
               </div>
             );
           })}
@@ -258,7 +259,7 @@ async function enviarChatDirecto(texto) {
               <div key={i} style={{ background: 'white', border: '1px solid #ddd', borderRadius: '8px', padding: '12px', marginBottom: '8px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <strong style={{ color: '#4f46e5' }}>{f.frase}</strong>
-                  <button onClick={() => hablar(f.frase)} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>🔊</button>
+                  <button onClick={() => hablar(f.frase)} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>Escuchar</button>
                 </div>
                 <p style={{ color: '#666', margin: '4px 0', fontSize: '0.9rem' }}>{f.traduccion}</p>
                 <p style={{ color: '#999', margin: 0, fontSize: '0.8rem' }}>{f.uso}</p>
@@ -278,7 +279,7 @@ async function enviarChatDirecto(texto) {
                   <strong style={{ color: '#4f46e5' }}>{v.palabra}</strong> - {v.traduccion}
                   <br /><small style={{ color: '#666' }}>{v.ejemplo} ({v.ejemplo_traduccion})</small>
                 </div>
-                <button onClick={() => hablar(v.palabra)} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>🔊</button>
+                <button onClick={() => hablar(v.palabra)} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>Escuchar</button>
               </div>
             );
           })}
@@ -304,7 +305,7 @@ async function enviarChatDirecto(texto) {
               {m.texto}
             </span>
             {m.rol === 'tutor' && (
-              <button onClick={() => hablar(m.texto)} style={{ background: 'transparent', border: 'none', cursor: 'pointer', marginLeft: '4px' }}>🔊</button>
+              <button onClick={() => hablar(m.texto)} style={{ background: 'transparent', border: 'none', cursor: 'pointer', marginLeft: '4px' }}>Escuchar</button>
             )}
           </div>
         );
@@ -344,7 +345,7 @@ async function enviarChatDirecto(texto) {
                 return (
                   <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
                     <span style={{ color: '#666', fontSize: '0.9rem' }}>{f.frase} = {f.traduccion}</span>
-                    <button onClick={() => hablar(f.frase)} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>🔊</button>
+                    <button onClick={() => hablar(f.frase)} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>Escuchar</button>
                   </div>
                 );
               })}
