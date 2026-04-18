@@ -18,8 +18,10 @@ function LeccionModulos({ idioma, nivel, tema, onVolver }) {
   const bottomRef = useRef(null);
 useEffect(() => {
   if (moduloActivo === 'conversacion' && mensajesChat.length > 0) {
-    const chatBox = document.getElementById('chat-box-leccion');
-    if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+    setTimeout(() => {
+      const chatBox = document.getElementById('chat-box-leccion');
+      if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+    }, 100);
   }
 }, [mensajesChat]);
 
