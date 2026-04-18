@@ -16,6 +16,7 @@ import Cultura from "./components/Cultura";
 import Ejercicios from "./components/Ejercicios";
 import MiCamino from "./components/MiCamino";
 import "./App.css";
+import Conversacion from "./components/Conversacion";
 
 const IDIOMAS = [
   { codigo: "ingles",    nombre: "Ingles",    bandera: "US" },
@@ -34,6 +35,7 @@ function App() {
   const [nivelUsuario, setNivelUsuario] = useState(localStorage.getItem("nivel_ingles") || "");
   const [idioma, setIdioma] = useState(localStorage.getItem("idioma_seleccionado") || "ingles");
   const [mostrarIdiomas, setMostrarIdiomas] = useState(false);
+  const [mostrarConversacion, setMostrarConversacion] = useState(false);
 
   useEffect(() => {
     async function cargarProgreso() {
@@ -84,7 +86,7 @@ function App() {
         </header>
         <nav style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "8px", marginBottom: "24px" }}>
           <button className={moduloActivo === "corrector"    ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("corrector")}>Corrector</button>
-          <button className={moduloActivo === "conversacion" ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("conversacion")}>Conversacion</button>
+          <button className="nav-btn" onClick={() => setMostrarConversacion(true)}>Conversacion</button>
           <button className={moduloActivo === "frases"       ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("frases")}>Frases</button>
           <button className={moduloActivo === "gramatica"    ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("gramatica")}>Gramatica</button>
           <button className={moduloActivo === "diagnostico"  ? "nav-btn active" : "nav-btn"} onClick={() => setModuloActivo("diagnostico")}>Mi nivel</button>
@@ -99,7 +101,7 @@ function App() {
         </nav>
         <main>
           {moduloActivo === "corrector"    && <Corrector idioma={idioma} />}
-          {moduloActivo === "conversacion" && <Chat idioma={idioma} />}
+          
           {moduloActivo === "frases"       && <Frases idioma={idioma} />}
           {moduloActivo === "gramatica"    && <Gramatica idioma={idioma} />}
           {moduloActivo === "diagnostico"  && <Diagnostico idioma={idioma} onNivelDeterminado={(nivel) => { setNivelUsuario(nivel); guardarIdiomaYNivel(idioma, nivel); }} />}
@@ -113,11 +115,16 @@ function App() {
           {moduloActivo === "ejercicios"   && <Ejercicios idioma={idioma} nivelUsuario={nivelUsuario} />}
         </main>
       </div>
+    {mostrarConversacion && <Conversacion idioma={idioma} onCerrar={() => setMostrarConversacion(false)} />}
     </ProtectedRoute>
   );
 }
 
 export default App;
+
+
+
+
 
 
 
