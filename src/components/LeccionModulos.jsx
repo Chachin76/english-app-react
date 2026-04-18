@@ -16,18 +16,7 @@ function LeccionModulos({ idioma, nivel, tema, onVolver }) {
   const [escuchando, setEscuchando] = useState(false);
   const recognitionRef = useState(null);
   const bottomRef = useRef(null);
-useEffect(() => {
-  if (moduloActivo === 'conversacion' && mensajesChat.length > 0) {
-    const pageY = window.scrollY;
-    const chatBox = document.getElementById('chat-box-leccion');
-    if (chatBox) {
-      chatBox.scrollTop = chatBox.scrollHeight;
-    }
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: pageY, behavior: 'instant' });
-    });
-  }
-}, [mensajesChat]);
+
 
   const BACKEND = 'https://english-app-backend-ifyj.onrender.com';
 
