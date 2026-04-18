@@ -21,8 +21,9 @@ useEffect(() => {
     setTimeout(() => {
       const chatBox = document.getElementById('chat-box-leccion');
       if (chatBox) {
+        const pageY = window.scrollY;
         chatBox.scrollTop = chatBox.scrollHeight;
-        chatBox.focus();
+        window.scrollTo(0, pageY);
       }
     }, 300);
   }
