@@ -133,6 +133,14 @@ function MiCamino({ idioma = 'ingles' }) {
           );
         })}
       </div>
+      {!leccionCompletada && (
+  <LeccionModulos
+    idioma={idioma}
+    nivel={nivelActivo}
+    tema={leccionData.tema}
+    onVolver={() => {}}
+  />
+)}
       {!leccionCompletada && leccionData.ejercicios && (
         <div>
           <h4>Ejercicio {ejercicioActual + 1} de {leccionData.ejercicios.length}:</h4>
@@ -163,15 +171,7 @@ function MiCamino({ idioma = 'ingles' }) {
           }
         </div>
       )}
-{!leccionCompletada && (
-  <LeccionModulos
-    idioma={idioma}
-    nivel={nivelActivo}
-    tema={leccionData.tema}
-    onVolver={() => {}}
-  />
-)}
-      {leccionCompletada && (
+{leccionCompletada && (
         <div style={{ textAlign: 'center', padding: '24px', background: '#f0fdf4', borderRadius: '12px' }}>
           <div style={{ fontSize: '3rem' }}>🎉</div>
           <h3 style={{ color: '#166534' }}>Leccion completada!</h3>
