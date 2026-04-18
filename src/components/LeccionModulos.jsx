@@ -18,14 +18,14 @@ function LeccionModulos({ idioma, nivel, tema, onVolver }) {
   const bottomRef = useRef(null);
 useEffect(() => {
   if (moduloActivo === 'conversacion' && mensajesChat.length > 0) {
-    setTimeout(() => {
-      const chatBox = document.getElementById('chat-box-leccion');
-      if (chatBox) {
-        const pageY = window.scrollY;
-        chatBox.scrollTop = chatBox.scrollHeight;
-        window.scrollTo(0, pageY);
-      }
-    }, 300);
+    const pageY = window.scrollY;
+    const chatBox = document.getElementById('chat-box-leccion');
+    if (chatBox) {
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: pageY, behavior: 'instant' });
+    });
   }
 }, [mensajesChat]);
 
