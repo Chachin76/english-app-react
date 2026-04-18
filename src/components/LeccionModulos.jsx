@@ -17,13 +17,16 @@ function LeccionModulos({ idioma, nivel, tema, onVolver }) {
   const recognitionRef = useState(null);
   const bottomRef = useRef(null);
 useEffect(() => {
-  if (moduloActivo === 'conversacion' && mensajesChat.length > 0) {
+  if (moduloActivo === 'conversacion') {
     setTimeout(() => {
       const chatBox = document.getElementById('chat-box-leccion');
-      if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
-    }, 100);
+      if (chatBox) {
+        chatBox.scrollTop = chatBox.scrollHeight;
+        chatBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, 200);
   }
-}, [mensajesChat]);
+}, [mensajesChat, cargando]);
 
   const BACKEND = 'https://english-app-backend-ifyj.onrender.com';
 
