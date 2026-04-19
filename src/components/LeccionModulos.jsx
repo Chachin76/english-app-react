@@ -297,7 +297,7 @@ async function enviarChatDirecto(texto) {
         })}
       </div>
     )}
-    <div id='chat-box-leccion' tabIndex='-1' style={{ background: '#f5f5f5', outline: 'none',, borderRadius: '8px', padding: '12px', minHeight: '200px', marginBottom: '8px', maxHeight: '300px', overflowY: 'auto' }}>
+    <div id='chat-box-leccion' style={{ background: '#f5f5f5', borderRadius: '8px', padding: '12px', minHeight: '200px', marginBottom: '8px', maxHeight: '300px', overflowY: 'auto' }}>
       {mensajesChat.map(function(m, i) {
         return (
           <div key={i} style={{ marginBottom: '8px', textAlign: m.rol === 'usuario' ? 'right' : 'left' }}>
