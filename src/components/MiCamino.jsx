@@ -3,6 +3,7 @@ import { supabase } from '../supabase';
 import EscrituraJapones from './EscrituraJapones';
 import EscrituraKatakana from './EscrituraKatakana';
 import LeccionModulos from './LeccionModulos';
+import Conversacion from './Conversacion';
 
 const NIVELES = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 

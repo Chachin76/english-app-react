@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import Conversacion from './Conversacion';
 
 function LeccionModulos({ idioma, nivel, tema, onVolver }) {
   const [moduloActivo, setModuloActivo] = useState(null);
@@ -13,6 +14,7 @@ function LeccionModulos({ idioma, nivel, tema, onVolver }) {
   const [resultadoDictado, setResultadoDictado] = useState(null);
   const [lecturaRespuestas, setLecturaRespuestas] = useState({});
   const [lecturaResultado, setLecturaResultado] = useState(null);
+  const [mostrarConversacion, setMostrarConversacion] = useState(false);
   const [escuchando, setEscuchando] = useState(false);
   const recognitionRef = useState(null);
   const bottomRef = useRef(null);
@@ -22,7 +24,6 @@ function LeccionModulos({ idioma, nivel, tema, onVolver }) {
 
   const MODULOS = [
   { id: 'corrector', nombre: 'Corrector' },
-  { id: 'conversacion', nombre: 'Conversacion' },
   { id: 'frases', nombre: 'Frases' },
   { id: 'vocabulario', nombre: 'Vocabulario' },
   { id: 'situacion', nombre: 'Situaciones' },
@@ -205,6 +206,10 @@ async function enviarChatDirecto(texto) {
         <button onClick={onVolver} style={{ marginTop: '12px', width: '100%', padding: '10px', background: '#e8eaf6', border: 'none', borderRadius: '8px', cursor: 'pointer', color: '#333' }}>
           Volver a la leccion
         </button>
+        <button onClick={() => setMostrarConversacion(true)} style={{ marginTop: '8px', width: '100%', padding: '12px', background: '#4f46e5', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600' }}>
+          Practicar Conversacion
+        </button>
+        {mostrarConversacion && <Conversacion idioma={idioma} nivel={nivel} tema={tema} onCerrar={() => setMostrarConversacion(false)} />}
       </div>
     );
   }
