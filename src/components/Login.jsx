@@ -99,7 +99,8 @@ const handleReset = async () => {
           <button onClick={handleMagicLink} disabled={cargando} style={{ width: '100%', padding: '12px', background: '#4f46e5', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', fontSize: '1rem' }}>
             {cargando ? 'Enviando...' : '✨ Enviar Magic Link'}
           </button>
-<button onClick={() => setModoReset(!modoReset)} style={{ width: '100%', padding: '10px', background: 'transparent', border: 'none', color: '#4f46e5', cursor: 'pointer', fontSize: '0.9rem', marginTop: '8px' }}>
+        )}
+        <button onClick={() => setModoReset(!modoReset)} style={{ width: '100%', padding: '10px', background: 'transparent', border: 'none', color: '#4f46e5', cursor: 'pointer', fontSize: '0.9rem', marginTop: '8px' }}>
           {modoReset ? 'Volver al login' : 'Olvide mi contraseña'}
         </button>
         {modoReset && !emailEnviado && (
