@@ -7,6 +7,8 @@ function Login() {
   const [modo, setModo] = useState('password'); // 'password' o 'magic'
   const [mensaje, setMensaje] = useState('');
   const [cargando, setCargando] = useState(false);
+  const [modoReset, setModoReset] = useState(false);
+  const [emailEnviado, setEmailEnviado] = useState(false);
 
   const handleLogin = async () => {
     setCargando(true);
@@ -15,6 +17,18 @@ function Login() {
     if (error) setMensaje('❌ ' + error.message);
     setCargando(false);
   };
+
+const handleReset = async () => {
+  if (!email.trim()) { setMensaje('Ingresa tu email primero.'); return; }
+  setCargando(true);
+  setMensaje('');
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: 'https://english-app-react.vercel.app'
+  });
+  if (error) setMensaje('Error: ' + error.message);
+  else setEmailEnviado(true);
+  setCargando(false);
+};
 
   const handleRegistro = async () => {
     setCargando(true);
@@ -85,6 +99,18 @@ function Login() {
           <button onClick={handleMagicLink} disabled={cargando} style={{ width: '100%', padding: '12px', background: '#4f46e5', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', fontSize: '1rem' }}>
             {cargando ? 'Enviando...' : '✨ Enviar Magic Link'}
           </button>
+<button onClick={() => setModoReset(!modoReset)} style={{ width: '100%', padding: '10px', background: 'transparent', border: 'none', color: '#4f46e5', cursor: 'pointer', fontSize: '0.9rem', marginTop: '8px' }}>
+          {modoReset ? 'Volver al login' : 'Olvide mi contraseña'}
+        </button>
+        {modoReset && !emailEnviado && (
+          <button onClick={handleReset} disabled={cargando} style={{ width: '100%', padding: '12px', background: '#e8eaf6', color: '#4f46e5', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', marginTop: '8px' }}>
+            {cargando ? 'Enviando...' : 'Enviar email de recuperacion'}
+          </button>
+        )}
+        {emailEnviado && (
+          <p style={{ textAlign: 'center', color: '#166534', marginTop: '8px', fontSize: '0.9rem' }}>
+            Revisa tu email para recuperar tu contraseña
+          </p>
         )}
       </div>
     </div>
