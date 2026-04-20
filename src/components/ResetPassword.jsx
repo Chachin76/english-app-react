@@ -7,6 +7,7 @@ function ResetPassword({ onVolver }) {
   const [mensaje, setMensaje] = useState('');
   const [cargando, setCargando] = useState(false);
   const [listo, setListo] = useState(false);
+  const [verPassword, setVerPassword] = useState(false);
 
   async function cambiarPassword() {
     if (!password.trim()) { setMensaje('Ingresa una contraseña.'); return; }
@@ -42,20 +43,27 @@ function ResetPassword({ onVolver }) {
       <div style={{ background: 'white', padding: '40px', borderRadius: '16px', boxShadow: '0 4px 24px rgba(0,0,0,0.1)', width: '100%', maxWidth: '400px' }}>
         <h2 style={{ textAlign: 'center', marginBottom: '8px', color: '#4f46e5' }}>Nueva contraseña</h2>
         <p style={{ textAlign: 'center', color: '#666', marginBottom: '24px' }}>Ingresa tu nueva contraseña</p>
-        <input
-          type="password"
-          placeholder="Nueva contraseña"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #ddd', marginBottom: '12px', fontSize: '1rem', boxSizing: 'border-box', color: '#333' }}
-        />
-        <input
-          type="password"
-          placeholder="Confirmar contraseña"
-          value={confirmar}
-          onChange={e => setConfirmar(e.target.value)}
-          style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #ddd', marginBottom: '12px', fontSize: '1rem', boxSizing: 'border-box', color: '#333' }}
-        />
+        <div style={{ position: 'relative', marginBottom: '12px' }}>
+          <input
+            type={verPassword ? 'text' : 'password'}
+            placeholder="Nueva contraseña"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            style={{ width: '100%', padding: '12px', paddingRight: '100px', borderRadius: '8px', border: '1px solid #ddd', fontSize: '1rem', boxSizing: 'border-box', color: '#333' }}
+          />
+          <button onClick={() => setVerPassword(!verPassword)} style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', cursor: 'pointer', color: '#4f46e5', fontSize: '0.85rem', fontWeight: '600' }}>
+            {verPassword ? 'Ocultar' : 'Ver'}
+          </button>
+        </div>
+        <div style={{ position: 'relative', marginBottom: '12px' }}>
+          <input
+            type={verPassword ? 'text' : 'password'}
+            placeholder="Confirmar contraseña"
+            value={confirmar}
+            onChange={e => setConfirmar(e.target.value)}
+            style={{ width: '100%', padding: '12px', paddingRight: '100px', borderRadius: '8px', border: '1px solid #ddd', fontSize: '1rem', boxSizing: 'border-box', color: '#333' }}
+          />
+        </div>
         {mensaje && (
           <p style={{ color: listo ? '#166534' : '#991b1b', marginBottom: '12px', fontSize: '0.9rem', textAlign: 'center' }}>
             {mensaje}
