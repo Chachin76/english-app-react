@@ -87,10 +87,12 @@ function Conversacion({ idioma = 'ingles', nivel = '', tema = '', onCerrar }) {
     setInput('');
     setCargando(true);
     try {
-      const historial = nuevos.map(m => ({
-        role: m.rol === 'usuario' ? 'user' : 'assistant',
-        content: m.texto
-      }));
+      const historial = nuevos
+        .filter(m => !(m.rol === 'tutor' && nuevos.indexOf(m) === 0))
+        .map(m => ({
+          role: m.rol === 'usuario' ? 'user' : 'assistant',
+          content: m.texto
+        }));
       const resp = await fetch('https://english-app-backend-ifyj.onrender.com/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
