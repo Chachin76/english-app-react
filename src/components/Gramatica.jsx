@@ -11,6 +11,18 @@ const ESTRUCTURAS_POR_IDIOMA = {
   japones:   ["〜がありますか?", "〜したいです", "〜したことがありますか?", "どのくらい〜していますか?", "以前は〜していました", "〜についてどう思いますか?", "賛成/反対です", "〜を手伝ってもらえますか?", "〜を楽しみにしています", "〜によります"],
 };
 
+
+const ACENTOS_POR_IDIOMA = {
+  ingles:    [['en-US', 'Americano'], ['en-GB', 'Britanico']],
+  frances:   [['fr-FR', 'Francia'], ['fr-CA', 'Quebec']],
+  portugues: [['pt-BR', 'Brasil'], ['pt-PT', 'Portugal']],
+  italiano:  [['it-IT', 'Estandar'], ['it-IT', 'Regional']],
+  aleman:    [['de-DE', 'Alemania'], ['de-AT', 'Austria']],
+  espanol:   [['es-ES', 'Espana'], ['es-AR', 'Argentina']],
+  chino:     [['zh-CN', 'Mandarin'], ['zh-TW', 'Taiwan']],
+  japones:   [['ja-JP', 'Estandar'], ['ja-JP', 'Formal']],
+  coreano:   [['ko-KR', 'Estandar'], ['ko-KR', 'Formal']],
+};
 function Gramatica({ idioma = 'ingles' }) {
   const ESTRUCTURAS = ESTRUCTURAS_POR_IDIOMA[idioma] || ESTRUCTURAS_POR_IDIOMA['ingles'];
  useEffect(() => {
@@ -24,7 +36,7 @@ function Gramatica({ idioma = 'ingles' }) {
   const [cargando, setCargando]                             = useState(false);
   const [error, setError]                                   = useState('');
   const [velocidad, setVelocidad]                           = useState(1);
-  const [acento, setAcento]                                 = useState('en-US');
+  const [acento, setAcento] = useState((ACENTOS_POR_IDIOMA[idioma] || ACENTOS_POR_IDIOMA['ingles'])[0][0]);
   const [escuchando, setEscuchando]                         = useState(null);
   const [feedback, setFeedback]                             = useState({});
   const recognitionRef                                      = useRef(null);
@@ -202,9 +214,9 @@ const VOCES_IDIOMA = {
       {/* Controles de voz */}
       <div style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'16px', flexWrap:'wrap', fontSize:'0.85rem', color:'var(--color-text-secondary)' }}>
         <span>Acento:</span>
-        {[['en-US','🇺🇸 Americano'],['en-GB','🇬🇧 Británico']].map(([lang, label]) => (
+        {(ACENTOS_POR_IDIOMA[idioma] || ACENTOS_POR_IDIOMA['ingles']).map(([lang, label]) => (
           <button
-            key={lang}
+            key={lang + label}
             onClick={() => setAcento(lang)}
             style={{
               background: acento===lang ? '#e8f0fe' : 'var(--color-background-secondary)',
