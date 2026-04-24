@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import EscrituraJapones from './EscrituraJapones';
 import EscrituraKatakana from './EscrituraKatakana';
+import EscrituraLatina from './EscrituraLatina';
 import LeccionModulos from './LeccionModulos';
 import Conversacion from './Conversacion';
 
@@ -119,6 +120,7 @@ function MiCamino({ idioma = 'ingles' }) {
         <p style={{ color: '#333', lineHeight: '1.6' }}>{leccionData.explicacion}</p>
       </div>
 {idioma === 'japones' && leccionData.leccion <= 5 && <EscrituraJapones />}
+{['frances', 'aleman', 'portugues', 'italiano'].includes(idioma) && leccionData.leccion <= 3 && <EscrituraLatina idioma={idioma} />}
 {idioma === 'japones' && leccionData.leccion >= 6 && leccionData.leccion <= 10 && <EscrituraKatakana />}
       <h4>Vocabulario clave:</h4>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '16px' }}>
