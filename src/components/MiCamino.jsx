@@ -5,6 +5,8 @@ import EscrituraKatakana from './EscrituraKatakana';
 import EscrituraLatina from './EscrituraLatina';
 import EscrituraHangul from './EscrituraHangul';
 import EscrituraPinyin from './EscrituraPinyin';
+import FoneticaIngles from './FoneticaIngles';
+import FoneticaEspanol from './FoneticaEspanol';
 import LeccionModulos from './LeccionModulos';
 import Conversacion from './Conversacion';
 
@@ -125,6 +127,8 @@ function MiCamino({ idioma = 'ingles' }) {
 {['frances', 'aleman', 'portugues', 'italiano'].includes(idioma) && leccionData.leccion <= 3 && <EscrituraLatina idioma={idioma} />}
 {idioma === 'coreano' && leccionData.leccion <= 5 && <EscrituraHangul />}
 {idioma === 'chino' && leccionData.leccion <= 5 && <EscrituraPinyin />}
+{idioma === 'ingles' && leccionData.leccion <= 3 && <FoneticaIngles />}
+{idioma === 'espanol' && leccionData.leccion <= 3 && <FoneticaEspanol />}
 {idioma === 'japones' && leccionData.leccion >= 6 && leccionData.leccion <= 10 && <EscrituraKatakana />}
       <h4>Vocabulario clave:</h4>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '16px' }}>
